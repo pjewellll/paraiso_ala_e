@@ -8,14 +8,18 @@
 <section class="booking-page">
 
     <div class="booking-header">
-        <span class="eyebrow">CREATE BOOKING</span>
-        <h2>Reserve Your Stay</h2>
-        <p>
-            Complete your guest details, choose your preferred room or service,
-            and review the estimated payment before submitting.
-        </p>
-    </div>
+    <span class="eyebrow" data-i18n="create_booking">CREATE BOOKING</span>
+    <h2 data-i18n="reserve_your_stay">Reserve Your Stay</h2>
+    <p data-i18n="booking_header_text">
+        Complete your guest details, choose your preferred room or service,
+        and review the estimated payment before submitting.
+    </p>
+</div>
 
+<div class="form-card-title">
+    <span data-i18n="guest_booking_form">Guest Booking Form</span>
+    <h3 data-i18n="reservation_details">Reservation Details</h3>
+</div>
     <div class="booking-layout">
 
         <!-- LEFT: BOOKING FORM -->
@@ -27,69 +31,96 @@
 
             <form method="POST" action="{{ url_for('booking') }}" class="form-grid">
 
-                <label>
-                    Full Name
-                    <input type="text" name="guest_name" placeholder="Enter full name" required>
-                </label>
+<label>
+    <span data-i18n="full_name_label">Full Name</span>
+    <input type="text"
+           name="guest_name"
+           placeholder="Enter full name"
+           data-i18n-placeholder="placeholder_full_name"
+           required>
+</label>
 
-                <label>
-                    Email
-                    <input type="email" name="email" placeholder="Enter email address" required>
-                </label>
+<label>
+    <span data-i18n="email_label">Email</span>
+    <input type="email"
+           name="email"
+           placeholder="Enter email address"
+           data-i18n-placeholder="placeholder_email"
+           required>
+</label>
 
-                <label>
-                    Contact Number
-                    <input type="text" name="contact_number" placeholder="Enter contact number" required>
-                </label>
+<label>
+    <span data-i18n="contact_number_label">Contact Number</span>
+    <input type="text"
+           name="contact_number"
+           placeholder="Enter contact number"
+           data-i18n-placeholder="placeholder_contact_number"
+           required>
+</label>
 
-                <label>
-                    Room Type
-                    <select name="room_type" id="roomType" required>
-                        <option value="" data-price="0">Select a room</option>
+<label>
+    <span data-i18n="room_type_label">Room Type</span>
+    <select name="room_type" id="roomType" required>
+        <option value="" data-price="0" data-i18n="select_room">Select a room</option>
 
-                        {% for room in rooms %}
-                            <option value="{{ room['room_name'] }}" data-price="{{ room['price'] }}">
-                                {{ room['room_name'] }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </label>
+        {% for room in rooms %}
+            <option value="{{ room['room_name'] }}" data-price="{{ room['price'] }}">
+                {{ room['room_name'] }}
+            </option>
+        {% endfor %}
+    </select>
+</label>
 
-                <label>
-                    Check-in Date
-                    <input type="text" id="checkinDate" name="checkin_date" placeholder="Select check-in date" required>
-                </label>
+<label>
+    <span data-i18n="checkin_date_label">Check-in Date</span>
+    <input type="text"
+           id="checkinDate"
+           name="checkin_date"
+           placeholder="Select check-in date"
+           data-i18n-placeholder="placeholder_checkin"
+           required>
+</label>
 
-                <label>
-                    Check-out Date
-                    <input type="text" id="checkoutDate" name="checkout_date" placeholder="Select check-out date" required>
-                </label>
+<label>
+    <span data-i18n="checkout_date_label">Check-out Date</span>
+    <input type="text"
+           id="checkoutDate"
+           name="checkout_date"
+           placeholder="Select check-out date"
+           data-i18n-placeholder="placeholder_checkout"
+           required>
+</label>
 
-                <label>
-                    Number of Guests
-                    <input type="number" name="guests" id="guestCount" min="1" value="1" required>
-                </label>
+<label>
+    <span data-i18n="number_of_guests_label">Number of Guests</span>
+    <input type="number" name="guests" id="guestCount" min="1" value="1" required>
+</label>
 
-                <label>
-                    Mode of Payment
-                    <select name="payment_method" id="paymentMethod" required>
-                        <option value="">Select payment method</option>
-                        <option value="GCash">GCash</option>
-                        <option value="Maya">Maya</option>
-                        <option value="Bank Transfer">Bank Transfer</option>
-                    </select>
-                </label>
+<label>
+    <span data-i18n="payment_method_label">Mode of Payment</span>
+    <select name="payment_method" id="paymentMethod" required>
+        <option value="" data-i18n="select_payment_method">Select payment method</option>
+        <option value="GCash">GCash</option>
+        <option value="Maya">Maya</option>
+        <option value="Bank Transfer" data-i18n="bank_transfer">Bank Transfer</option>
+    </select>
+</label>
 
-                <label class="full-width">
-                    Special Request
-                    <textarea name="special_requests" rows="4" placeholder="Write any special requests here..."></textarea>
-                </label>
+<label class="full-width">
+    <span data-i18n="special_request_label">Special Request</span>
+    <textarea name="special_requests"
+              rows="4"
+              placeholder="Write any special requests here..."
+              data-i18n-placeholder="placeholder_special_request"></textarea>
+</label>
 
-                <button class="btn primary full-width booking-submit-btn" type="submit">
-                    Submit Booking
-                </button>
-            </form>
-        </section>
+<button class="btn primary full-width booking-submit-btn"
+        type="submit"
+        data-i18n="submit_booking">
+    Submit Booking
+</button>
+</form>
+</section>
 
         <!-- RIGHT: LIVE PAYMENT PREVIEW -->
         <aside class="booking-preview-card">
