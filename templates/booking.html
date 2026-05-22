@@ -8,170 +8,174 @@
 <section class="booking-page">
 
     <div class="booking-header">
-    <span class="eyebrow" data-i18n="create_booking">CREATE BOOKING</span>
-    <h2 data-i18n="reserve_your_stay">Reserve Your Stay</h2>
-    <p data-i18n="booking_header_text">
-        Complete your guest details, choose your preferred room or service,
-        and review the estimated payment before submitting.
-    </p>
-</div>
+        <span class="eyebrow" data-i18n="create_booking">CREATE BOOKING</span>
+        <h2 data-i18n="reserve_your_stay">Reserve Your Stay</h2>
+        <p data-i18n="booking_header_text">
+            Complete your guest details, choose your preferred room or service,
+            and review the estimated payment before submitting.
+        </p>
+    </div>
 
-<div class="form-card-title">
-    <span data-i18n="guest_booking_form">Guest Booking Form</span>
-    <h3 data-i18n="reservation_details">Reservation Details</h3>
-</div>
     <div class="booking-layout">
 
         <!-- LEFT: BOOKING FORM -->
         <section class="form-card">
             <div class="form-card-title">
-                <span>Guest Booking Form</span>
-                <h3>Reservation Details</h3>
+                <span data-i18n="guest_booking_form">Guest Booking Form</span>
+                <h3 data-i18n="reservation_details">Reservation Details</h3>
             </div>
 
             <form method="POST" action="{{ url_for('booking') }}" class="form-grid">
 
-<label>
-    <span data-i18n="full_name_label">Full Name</span>
-    <input type="text"
-           name="guest_name"
-           placeholder="Enter full name"
-           data-i18n-placeholder="placeholder_full_name"
-           required>
-</label>
+                <label>
+                    <span data-i18n="full_name_label">Full Name</span>
+                    <input type="text"
+                           name="guest_name"
+                           placeholder="Enter full name"
+                           data-i18n-placeholder="placeholder_full_name"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="email_label">Email</span>
-    <input type="email"
-           name="email"
-           placeholder="Enter email address"
-           data-i18n-placeholder="placeholder_email"
-           required>
-</label>
+                <label>
+                    <span data-i18n="email_label">Email</span>
+                    <input type="email"
+                           name="email"
+                           placeholder="Enter email address"
+                           data-i18n-placeholder="placeholder_email"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="contact_number_label">Contact Number</span>
-    <input type="text"
-           name="contact_number"
-           placeholder="Enter contact number"
-           data-i18n-placeholder="placeholder_contact_number"
-           required>
-</label>
+                <label>
+                    <span data-i18n="contact_number_label">Contact Number</span>
+                    <input type="text"
+                           name="contact_number"
+                           placeholder="Enter contact number"
+                           data-i18n-placeholder="placeholder_contact_number"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="room_type_label">Room Type</span>
-    <select name="room_type" id="roomType" required>
-        <option value="" data-price="0" data-i18n="select_room">Select a room</option>
+                <label>
+                    <span data-i18n="room_type_label">Room Type</span>
+                    <select name="room_type" id="roomType" required>
+                        <option value="" data-price="0" data-i18n="select_room">Select a room</option>
 
-        {% for room in rooms %}
-            <option value="{{ room['room_name'] }}" data-price="{{ room['price'] }}">
-                {{ room['room_name'] }}
-            </option>
-        {% endfor %}
-    </select>
-</label>
+                        {% for room in rooms %}
+                            <option value="{{ room['room_name'] }}" data-price="{{ room['price'] }}">
+                                {{ room['room_name'] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
 
-<label>
-    <span data-i18n="checkin_date_label">Check-in Date</span>
-    <input type="text"
-           id="checkinDate"
-           name="checkin_date"
-           placeholder="Select check-in date"
-           data-i18n-placeholder="placeholder_checkin"
-           required>
-</label>
+                <label>
+                    <span data-i18n="checkin_date_label">Check-in Date</span>
+                    <input type="text"
+                           id="checkinDate"
+                           name="checkin_date"
+                           placeholder="Select check-in date"
+                           data-i18n-placeholder="placeholder_checkin"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="checkout_date_label">Check-out Date</span>
-    <input type="text"
-           id="checkoutDate"
-           name="checkout_date"
-           placeholder="Select check-out date"
-           data-i18n-placeholder="placeholder_checkout"
-           required>
-</label>
+                <label>
+                    <span data-i18n="checkout_date_label">Check-out Date</span>
+                    <input type="text"
+                           id="checkoutDate"
+                           name="checkout_date"
+                           placeholder="Select check-out date"
+                           data-i18n-placeholder="placeholder_checkout"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="number_of_guests_label">Number of Guests</span>
-    <input type="number" name="guests" id="guestCount" min="1" value="1" required>
-</label>
+                <label>
+                    <span data-i18n="number_of_guests_label">Number of Guests</span>
+                    <input type="number"
+                           name="guests"
+                           id="guestCount"
+                           min="1"
+                           value="1"
+                           required>
+                </label>
 
-<label>
-    <span data-i18n="payment_method_label">Mode of Payment</span>
-    <select name="payment_method" id="paymentMethod" required>
-        <option value="" data-i18n="select_payment_method">Select payment method</option>
-        <option value="GCash">GCash</option>
-        <option value="Maya">Maya</option>
-        <option value="Bank Transfer" data-i18n="bank_transfer">Bank Transfer</option>
-    </select>
-</label>
+                <label>
+                    <span data-i18n="payment_method_label">Mode of Payment</span>
+                    <select name="payment_method" id="paymentMethod" required>
+                        <option value="" data-i18n="select_payment_method">Select payment method</option>
+                        <option value="GCash">GCash</option>
+                        <option value="Maya">Maya</option>
+                        <option value="Bank Transfer" data-i18n="bank_transfer">Bank Transfer</option>
+                    </select>
+                </label>
 
-<label class="full-width">
-    <span data-i18n="special_request_label">Special Request</span>
-    <textarea name="special_requests"
-              rows="4"
-              placeholder="Write any special requests here..."
-              data-i18n-placeholder="placeholder_special_request"></textarea>
-</label>
+                <label class="full-width">
+                    <span data-i18n="special_request_label">Special Request</span>
+                    <textarea name="special_requests"
+                              rows="4"
+                              placeholder="Write any special requests here..."
+                              data-i18n-placeholder="placeholder_special_request"></textarea>
+                </label>
 
-<button class="btn primary full-width booking-submit-btn"
-        type="submit"
-        data-i18n="submit_booking">
-    Submit Booking
-</button>
-</form>
-</section>
+                <button class="btn primary full-width booking-submit-btn"
+                        type="submit"
+                        data-i18n="submit_booking">
+                    Submit Booking
+                </button>
+
+            </form>
+        </section>
 
         <!-- RIGHT: LIVE PAYMENT PREVIEW -->
         <aside class="booking-preview-card">
             <div class="preview-card-heading">
-                <span>PAYMENT SUMMARY</span>
-                <h3>Booking Payment Preview</h3>
-                <p>This is an estimated computation before submitting.</p>
+                <span data-i18n="payment_summary">PAYMENT SUMMARY</span>
+                <h3 data-i18n="booking_payment_preview">Booking Payment Preview</h3>
+                <p data-i18n="payment_preview_note">
+                    This is an estimated computation before submitting.
+                </p>
             </div>
 
             <div class="preview-row">
-                <span>Selected Room</span>
+                <span data-i18n="selected_room">Selected Room</span>
                 <strong id="previewRoom">-</strong>
             </div>
 
             <div class="preview-row">
-                <span>Room Rate</span>
+                <span data-i18n="room_rate">Room Rate</span>
                 <strong id="previewRate">₱0.00</strong>
             </div>
 
             <div class="preview-row">
-                <span>Nights</span>
+                <span data-i18n="nights">Nights</span>
                 <strong id="previewNights">0</strong>
             </div>
 
             <div class="preview-row">
-                <span>Guests</span>
+                <span data-i18n="guests">Guests</span>
                 <strong id="previewGuests">1</strong>
             </div>
 
             <div class="preview-row">
-                <span>Accommodation Total</span>
+                <span data-i18n="accommodation_total">Accommodation Total</span>
                 <strong id="previewAccommodation">₱0.00</strong>
             </div>
 
             <div class="preview-row">
-                <span>Entrance Fee</span>
+                <span data-i18n="entrance_fee">Entrance Fee</span>
                 <strong id="previewEntrance">₱0.00</strong>
             </div>
 
             <div class="preview-row total">
-                <span>Total Amount</span>
+                <span data-i18n="total_amount">Total Amount</span>
                 <strong id="previewTotal">₱0.00</strong>
             </div>
 
             <div class="preview-row downpayment">
-                <span>Required Down Payment</span>
+                <span data-i18n="required_down_payment">Required Down Payment</span>
                 <strong id="previewDownpayment">₱0.00</strong>
             </div>
 
             <div class="preview-row balance">
-                <span>Remaining Balance</span>
+                <span data-i18n="remaining_balance">Remaining Balance</span>
                 <strong id="previewBalance">₱0.00</strong>
             </div>
         </aside>
@@ -611,14 +615,16 @@
     <div class="booked-date-modal-box">
         <div class="booked-date-icon">⚠️</div>
 
-        <h3>Date Already Has a Check-in</h3>
+        <h3 data-i18n="booked_date_title">Date Already Has a Check-in</h3>
 
-        <p>
+        <p data-i18n="booked_date_text">
             Someone already has a check-in scheduled on this date.
             You may still continue, but please verify availability first.
         </p>
 
-        <button type="button" onclick="closeBookedDateModal()">
+        <button type="button"
+                onclick="closeBookedDateModal()"
+                data-i18n="okay_understand">
             Okay, I Understand
         </button>
     </div>
@@ -813,6 +819,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     updatePreview();
+
+    const savedLanguage = localStorage.getItem("language") || "en";
+
+    if (typeof applyLanguage === "function") {
+        applyLanguage(savedLanguage);
+    }
 });
 </script>
 
