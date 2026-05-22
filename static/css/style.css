@@ -6521,3 +6521,186 @@ body.dark-mode .distance-box p {
     font-weight: 800;
     text-align: right;
 }
+
+/* =========================================
+   FORCE BOOKING LIGHT / DARK MODE FIX
+   Put this at the VERY BOTTOM of style.css
+========================================= */
+
+/* LIGHT MODE BOOKING */
+body.light-mode .booking-page .booking-header {
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.18), transparent 35%),
+        linear-gradient(135deg, #ffffff, #f8fafc) !important;
+    border: 1px solid rgba(15, 23, 42, 0.10) !important;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.10) !important;
+}
+
+body.light-mode .booking-page .booking-header h2 {
+    color: #101827 !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .booking-page .booking-header p {
+    color: #475569 !important;
+}
+
+body.light-mode .booking-page .form-card,
+body.light-mode .booking-page .booking-preview-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-mode .booking-page .form-card-title {
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+body.light-mode .booking-page .form-card-title h3,
+body.light-mode .booking-page .preview-card-heading h3 {
+    color: #071b3f !important;
+}
+
+body.light-mode .booking-page .form-grid label {
+    color: #071b3f !important;
+}
+
+body.light-mode .booking-page .form-grid input,
+body.light-mode .booking-page .form-grid select,
+body.light-mode .booking-page .form-grid textarea {
+    background: #ffffff !important;
+    border: 2px solid #d6deea !important;
+    color: #071b3f !important;
+}
+
+body.light-mode .booking-page .form-grid input::placeholder,
+body.light-mode .booking-page .form-grid textarea::placeholder {
+    color: #64748b !important;
+}
+
+body.light-mode .booking-page .form-grid select option {
+    background: #ffffff !important;
+    color: #071b3f !important;
+}
+
+body.light-mode .booking-page .preview-card-heading {
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+body.light-mode .booking-page .preview-card-heading p {
+    color: #64748b !important;
+}
+
+body.light-mode .booking-page .preview-row {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #dde5ef !important;
+}
+
+body.light-mode .booking-page .preview-row span {
+    color: #516277 !important;
+}
+
+body.light-mode .booking-page .preview-row strong {
+    color: #071b3f !important;
+}
+
+body.light-mode .booking-page .preview-row.total {
+    background: transparent !important;
+    border-top: 2px solid #071b3f !important;
+}
+
+body.light-mode .booking-page .preview-row.total span,
+body.light-mode .booking-page .preview-row.total strong {
+    color: #0f766e !important;
+}
+
+body.light-mode .booking-page .preview-row.downpayment {
+    background: transparent !important;
+}
+
+body.light-mode .booking-page .preview-row.downpayment strong {
+    color: #d97706 !important;
+}
+
+body.light-mode .booking-page .preview-row.balance {
+    background: transparent !important;
+}
+
+body.light-mode .booking-page .preview-row.balance strong {
+    color: #dc2626 !important;
+}
+
+body.light-mode .booking-page .booking-submit-btn,
+body.light-mode .booking-page .form-grid button[type="submit"] {
+    background: linear-gradient(90deg, #071b3f, #0d2d66) !important;
+    color: #ffffff !important;
+}
+
+
+/* DARK MODE BOOKING */
+body.dark-mode .booking-page .booking-header {
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.18), transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+body.dark-mode .booking-page .booking-header h2 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .booking-page .booking-header p {
+    color: #dbe7fb !important;
+}
+
+body.dark-mode .booking-page .form-card,
+body.dark-mode .booking-page .booking-preview-card {
+    background: linear-gradient(180deg, #17284d 0%, #101d38 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.38) !important;
+}
+
+body.dark-mode .booking-page .form-card-title,
+body.dark-mode .booking-page .preview-card-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body.dark-mode .booking-page .form-card-title h3,
+body.dark-mode .booking-page .preview-card-heading h3 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .booking-page .form-grid label {
+    color: #ffffff !important;
+}
+
+body.dark-mode .booking-page .form-grid input,
+body.dark-mode .booking-page .form-grid select,
+body.dark-mode .booking-page .form-grid textarea {
+    background: #0f1f3d !important;
+    border: 2px solid rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .booking-page .form-grid input::placeholder,
+body.dark-mode .booking-page .form-grid textarea::placeholder {
+    color: rgba(255, 255, 255, 0.60) !important;
+}
+
+body.dark-mode .booking-page .preview-card-heading p {
+    color: #dbe7fb !important;
+}
+
+body.dark-mode .booking-page .preview-row {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body.dark-mode .booking-page .preview-row span {
+    color: #dbe7fb !important;
+}
+
+body.dark-mode .booking-page .preview-row strong {
+    color: #ffffff !important;
+}

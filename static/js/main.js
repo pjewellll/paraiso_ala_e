@@ -464,12 +464,16 @@ function setLanguage(language) {
 
 /* DARK MODE */
 function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
 
-    if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("theme", "dark");
-    } else {
+    if (isDark) {
+        document.body.classList.remove("dark-mode");
+        document.body.classList.add("light-mode");
         localStorage.setItem("theme", "light");
+    } else {
+        document.body.classList.remove("light-mode");
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("theme", "dark");
     }
 }
 
@@ -765,15 +769,19 @@ function sendAiMessage(event) {
 
 /* LOAD SAVED SETTINGS */
 document.addEventListener("DOMContentLoaded", function () {
-    const savedTheme = localStorage.getItem("theme");
-    const savedLanguage = localStorage.getItem("language") || "en";
+const savedTheme = localStorage.getItem("theme") || "light";
+const savedLanguage = localStorage.getItem("language") || "en";
 
-    if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
-    }
+document.body.classList.remove("light-mode", "dark-mode");
 
-    applyLanguage(savedLanguage);
-    updateActiveLanguage(savedLanguage);
+if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+} else {
+    document.body.classList.add("light-mode");
+}
+
+applyLanguage(savedLanguage);
+updateActiveLanguage(savedLanguage);
 
     const slides = document.querySelectorAll(".slide-image");
 
