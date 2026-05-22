@@ -56,7 +56,7 @@ const translations = {
         no_rooms_title: "No rooms available",
         no_rooms_text: "Please check again later.",
 
-        create_booking: "Create Booking",
+        create_booking: "CREATE BOOKING",
         reserve_your_stay: "Reserve Your Stay",
         booking_header_text: "Complete your guest details, choose your preferred room or service, and review the estimated payment before submitting.",
 
@@ -66,7 +66,7 @@ const translations = {
         full_name_label: "Full Name",
         email_label: "Email",
         contact_number_label: "Contact Number",
-        room_type_label: "Room / Service Type",
+        room_type_label: "Room Type",
         checkin_date_label: "Check-in Date",
         checkout_date_label: "Check-out Date",
         number_of_guests_label: "Number of Guests",
@@ -82,9 +82,10 @@ const translations = {
 
         select_room: "Select a room",
         select_payment_method: "Select payment method",
+        bank_transfer: "Bank Transfer",
         submit_booking: "Submit Booking",
 
-        payment_summary: "Payment Summary",
+        payment_summary: "PAYMENT SUMMARY",
         booking_payment_preview: "Booking Payment Preview",
         payment_preview_note: "This is an estimated computation before submitting.",
         selected_room: "Selected Room",
@@ -101,71 +102,72 @@ const translations = {
         booked_date_text: "Someone already has a check-in scheduled on this date. You may still continue, but please verify availability first.",
         okay_understand: "Okay, I Understand",
 
+        booking_summary_kicker: "Reservation Overview",
+        booking_summary_title: "Booking Summary",
+        booking_summary_text: "Review your reservation and payment computation.",
+        booking_reference: "Booking Reference:",
+        guest_information: "Guest Information",
+        guest_name: "Name",
+        status_label: "Status",
+        booking_details: "Booking Details",
+        payment_computation: "Payment Computation",
+        back_to_home: "Back to Home",
+        edit_booking: "Edit Booking",
+        delete_booking: "Delete Booking",
+        modify_note: "You can edit or delete this booking within the allowed time period.",
+        locked_note: "This booking can no longer be edited or deleted.",
+
         contact_kicker: "Get in Touch",
-contact_page_title: "Contact Paraiso Ala Eh Garden Resort",
-contact_page_text: "Reach out for inquiries, reservations, directions, and resort assistance. You may also send us a direct message below.",
-contact_chip_location: "📍 Calatagan, Batangas",
-contact_chip_response: "📞 Fast Response",
-contact_chip_support: "✉ Guest Support",
+        contact_page_title: "Contact Paraiso Ala Eh Garden Resort",
+        contact_page_text: "Reach out for inquiries, reservations, directions, and resort assistance. You may also send us a direct message below.",
+        contact_chip_location: "📍 Calatagan, Batangas",
+        contact_chip_response: "📞 Fast Response",
+        contact_chip_support: "✉ Guest Support",
 
-contact_information: "Contact Information",
-contact_details: "Contact Details",
-contact_details_text: "Choose the most convenient way to reach us.",
+        contact_information: "Contact Information",
+        contact_details: "Contact Details",
+        contact_details_text: "Choose the most convenient way to reach us.",
 
-website_label: "Website",
-website_text: "Visit our website for resort updates and online booking information.",
-phone_label: "Phone Number",
-phone_text: "Available for calls and SMS regarding reservations and inquiries.",
-email_contact_text: "Send us your questions, concerns, or booking-related requests.",
-facebook_label: "Facebook",
-facebook_text: "Message us on Facebook for general inquiries and announcements.",
-instagram_label: "Instagram",
-instagram_text: "Follow us for photos, updates, and featured guest experiences.",
-tiktok_label: "TikTok",
-tiktok_text: "Stay tuned for short clips, resort highlights, and updates.",
+        website_label: "Website",
+        website_text: "Visit our website for resort updates and online booking information.",
+        phone_label: "Phone Number",
+        phone_text: "Available for calls and SMS regarding reservations and inquiries.",
+        email_contact_text: "Send us your questions, concerns, or booking-related requests.",
+        facebook_label: "Facebook",
+        facebook_text: "Message us on Facebook for general inquiries and announcements.",
+        instagram_label: "Instagram",
+        instagram_text: "Follow us for photos, updates, and featured guest experiences.",
+        tiktok_label: "TikTok",
+        tiktok_text: "Stay tuned for short clips, resort highlights, and updates.",
 
-send_message_kicker: "Send a Message",
-send_direct_message: "Send Direct Message",
-send_direct_message_text: "Guest messages submitted here will appear in the admin dashboard.",
-name_label: "Name",
-message_label: "Message",
-placeholder_name: "Enter your full name",
-placeholder_contact_email: "Enter your email address",
-placeholder_message: "Type your message here...",
-send_message_button: "Send Message",
+        send_message_kicker: "Send a Message",
+        send_direct_message: "Send Direct Message",
+        send_direct_message_text: "Guest messages submitted here will appear in the admin dashboard.",
+        name_label: "Name",
+        message_label: "Message",
+        placeholder_name: "Enter your full name",
+        placeholder_contact_email: "Enter your email address",
+        placeholder_message: "Type your message here...",
+        send_message_button: "Send Message",
 
-location_kicker: "Location & Directions",
-find_us_here: "Find Us Here",
-location_text: "Paraiso Ala Eh Garden Resort, Calatagan, Batangas",
-distance_title: "📍 Distance From Your Location",
-distance_text: "Click the button below to calculate your distance from the resort.",
-use_location: "Use My Location",
-open_directions: "Open Directions",
+        location_kicker: "Location & Directions",
+        find_us_here: "Find Us Here",
+        location_text: "Paraiso Ala Eh Garden Resort, Calatagan, Batangas",
+        distance_title: "📍 Distance From Your Location",
+        distance_text: "Click the button below to calculate your distance from the resort.",
+        use_location: "Use My Location",
+        open_directions: "Open Directions",
 
-allow_location_title: "Allow Location Access",
-allow_location_text: "To calculate your distance from Paraiso Ala Eh Garden Resort, we need permission to access your current location.",
-cancel_button: "Cancel",
-continue_button: "Continue",
+        allow_location_title: "Allow Location Access",
+        allow_location_text: "To calculate your distance from Paraiso Ala Eh Garden Resort, we need permission to access your current location.",
+        cancel_button: "Cancel",
+        continue_button: "Continue"
     },
 
-    booking_summary_kicker: "Reservation Overview",
-booking_summary_title: "Booking Summary",
-booking_summary_text: "Review your reservation and payment computation.",
-booking_reference: "Booking Reference:",
-guest_information: "Guest Information",
-guest_name: "Name",
-status_label: "Status",
-booking_details: "Booking Details",
-payment_computation: "Payment Computation",
-back_to_home: "Back to Home",
-edit_booking: "Edit Booking",
-delete_booking: "Delete Booking",
-modify_note: "You can edit or delete this booking within the allowed time period.",
-locked_note: "This booking can no longer be edited or deleted.",
     tl: {
         hero_resort_name: "Paraiso Ala Eh",
         hero_resort_suffix: "Garden Resort",
- 
+
         home: "Pangunahin",
         about: "Tungkol",
         contact: "Makipag-ugnayan",
@@ -217,7 +219,7 @@ locked_note: "This booking can no longer be edited or deleted.",
         no_rooms_title: "Walang available na kuwarto",
         no_rooms_text: "Pakisubukang muli mamaya.",
 
-        create_booking: "Gumawa ng Booking",
+        create_booking: "GUMAWA NG BOOKING",
         reserve_your_stay: "Ipareserba ang Iyong Stay",
         booking_header_text: "Kumpletuhin ang detalye ng bisita, pumili ng kuwarto o serbisyo, at tingnan muna ang tinatayang bayarin bago isumite.",
 
@@ -227,12 +229,12 @@ locked_note: "This booking can no longer be edited or deleted.",
         full_name_label: "Buong Pangalan",
         email_label: "Email",
         contact_number_label: "Numero ng Contact",
-        room_type_label: "Uri ng Kuwarto / Serbisyo",
+        room_type_label: "Uri ng Kuwarto",
         checkin_date_label: "Petsa ng Check-in",
         checkout_date_label: "Petsa ng Check-out",
-        number_of_guests_label: "Bilang ng bisita",
-        payment_method_label: "Paraan ng pagbabayad",
-        special_request_label: "Espesyal na hiling",
+        number_of_guests_label: "Bilang ng Bisita",
+        payment_method_label: "Paraan ng Pagbabayad",
+        special_request_label: "Espesyal na Hiling",
 
         placeholder_full_name: "Ilagay ang buong pangalan",
         placeholder_email: "Ilagay ang email address",
@@ -243,9 +245,10 @@ locked_note: "This booking can no longer be edited or deleted.",
 
         select_room: "Pumili ng kuwarto",
         select_payment_method: "Pumili ng paraan ng pagbabayad",
+        bank_transfer: "Bank Transfer",
         submit_booking: "Isumite ang Booking",
 
-        payment_summary: "Buod ng Bayarin",
+        payment_summary: "BUOD NG BAYARIN",
         booking_payment_preview: "Preview ng Bayad sa Booking",
         payment_preview_note: "Ito ay tinatayang computation bago isumite.",
         selected_room: "Napiling Kuwarto",
@@ -255,92 +258,87 @@ locked_note: "This booking can no longer be edited or deleted.",
         accommodation_total: "Kabuuang Accommodation",
         entrance_fee: "Entrance Fee",
         total_amount: "Kabuuang Halaga",
-        required_down_payment: "Kinakailangang pauanang kabayaran",
+        required_down_payment: "Kinakailangang Paunang Bayad",
         remaining_balance: "Natitirang Balanse",
 
         booked_date_title: "May Check-in na sa Petsang Ito",
         booked_date_text: "May naka-schedule nang check-in sa petsang ito. Maaari ka pa ring magpatuloy, ngunit pakisigurado muna ang availability.",
-        okay_understand: "Okay, Naiintindihan Ko", 
+        okay_understand: "Okay, Naiintindihan Ko",
 
-        booked_date_title: "May Check-in na sa Petsang Ito",
-booked_date_text: "May naka-schedule nang check-in sa petsang ito. Maaari ka pa ring magpatuloy, ngunit pakisigurado muna ang availability.",
-okay_understand: "Okay, Naiintindihan Ko",
+        booking_summary_kicker: "Buod ng Reserbasyon",
+        booking_summary_title: "Buod ng Booking",
+        booking_summary_text: "Suriin ang iyong reserbasyon at kalkulasyon ng bayarin.",
+        booking_reference: "Booking Reference:",
+        guest_information: "Impormasyon ng Bisita",
+        guest_name: "Pangalan",
+        status_label: "Status",
+        booking_details: "Detalye ng Booking",
+        payment_computation: "Kalkulasyon ng Bayarin",
+        back_to_home: "Bumalik sa Pangunahin",
+        edit_booking: "Baguhin ang Booking",
+        delete_booking: "Burahin ang Booking",
+        modify_note: "Maaari mong baguhin o burahin ang booking na ito sa loob ng pinapayagang oras.",
+        locked_note: "Hindi na maaaring baguhin o burahin ang booking na ito.",
 
-booking_summary_kicker: "Buod ng Reserbasyon",
-booking_summary_title: "Buod ng Booking",
-booking_summary_text: "Suriin ang iyong reserbasyon at kalkulasyon ng bayarin.",
-booking_reference: "Booking Reference:",
-guest_information: "Impormasyon ng Bisita",
-guest_name: "Pangalan",
-status_label: "lagay",
-booking_details: "Detalye ng Booking",
-payment_computation: "kalkulasyon ng Bayarin",
-back_to_home: "Bumalik sa Unahan",
-edit_booking: "Baguhin ang Booking",
-delete_booking: "Burahin ang Booking",
-modify_note: "Maaari mong baguhin o burahin ang booking na ito sa loob ng pinapayagang oras.",
-locked_note: "Hindi na maaaring baguhin o burahin ang booking na ito.",
-        
-contact_kicker: "Makipag-ugnayan",
-contact_page_title: "Makipag-ugnayan sa Paraiso Ala Eh Garden Resort",
-contact_page_text: "Makipag-ugnayan para sa mga tanong, reserbasyon, direksyon, at tulong tungkol sa resort. Maaari ka ring magpadala ng direktang mensahe sa ibaba.",
-contact_chip_location: "📍 Calatagan, Batangas",
-contact_chip_response: "📞 Mabilis na Tugon",
-contact_chip_support: "✉ Suporta sa Bisita",
+        contact_kicker: "Makipag-ugnayan",
+        contact_page_title: "Makipag-ugnayan sa Paraiso Ala Eh Garden Resort",
+        contact_page_text: "Makipag-ugnayan para sa mga tanong, reserbasyon, direksyon, at tulong tungkol sa resort. Maaari ka ring magpadala ng direktang mensahe sa ibaba.",
+        contact_chip_location: "📍 Calatagan, Batangas",
+        contact_chip_response: "📞 Mabilis na Tugon",
+        contact_chip_support: "✉ Suporta sa Bisita",
 
-contact_information: "Impormasyon sa Pakikipag-ugnayan",
-contact_details: "Detalye ng Contact",
-contact_details_text: "Piliin ang pinakaangkop na paraan para makipag-ugnayan sa amin.",
+        contact_information: "Impormasyon sa Pakikipag-ugnayan",
+        contact_details: "Detalye ng Contact",
+        contact_details_text: "Piliin ang pinakaangkop na paraan para makipag-ugnayan sa amin.",
 
-website_label: "Website",
-website_text: "Bisitahin ang aming website para sa resort updates at online booking information.",
-phone_label: "Numero ng Telepono",
-phone_text: "Available para sa tawag at SMS tungkol sa reserbasyon at mga katanungan.",
-email_contact_text: "Ipadala sa amin ang iyong mga tanong, concern, o booking request.",
-facebook_label: "Facebook",
-facebook_text: "Mag-message sa amin sa Facebook para sa inquiries at announcements.",
-instagram_label: "Instagram",
-instagram_text: "I-follow kami para sa photos, updates, at featured guest experiences.",
-tiktok_label: "TikTok",
-tiktok_text: "Abangan ang short clips, resort highlights, at updates.",
+        website_label: "Website",
+        website_text: "Bisitahin ang aming website para sa resort updates at online booking information.",
+        phone_label: "Numero ng Telepono",
+        phone_text: "Available para sa tawag at SMS tungkol sa reserbasyon at mga katanungan.",
+        email_contact_text: "Ipadala sa amin ang iyong mga tanong, concern, o booking request.",
+        facebook_label: "Facebook",
+        facebook_text: "Mag-message sa amin sa Facebook para sa inquiries at announcements.",
+        instagram_label: "Instagram",
+        instagram_text: "I-follow kami para sa photos, updates, at featured guest experiences.",
+        tiktok_label: "TikTok",
+        tiktok_text: "Abangan ang short clips, resort highlights, at updates.",
 
-send_message_kicker: "Magpadala ng Mensahe",
-send_direct_message: "Magpadala ng Direktang Mensahe",
-send_direct_message_text: "Ang mga mensahe ng bisita dito ay lalabas sa admin dashboard.",
-name_label: "Pangalan",
-message_label: "Mensahe",
-placeholder_name: "Ilagay ang iyong buong pangalan",
-placeholder_contact_email: "Ilagay ang iyong email address",
-placeholder_message: "I-type ang iyong mensahe dito...",
-send_message_button: "Ipadala ang Mensahe",
+        send_message_kicker: "Magpadala ng Mensahe",
+        send_direct_message: "Magpadala ng Direktang Mensahe",
+        send_direct_message_text: "Ang mga mensahe ng bisita dito ay lalabas sa admin dashboard.",
+        name_label: "Pangalan",
+        message_label: "Mensahe",
+        placeholder_name: "Ilagay ang iyong buong pangalan",
+        placeholder_contact_email: "Ilagay ang iyong email address",
+        placeholder_message: "I-type ang iyong mensahe dito...",
+        send_message_button: "Ipadala ang Mensahe",
 
-location_kicker: "Lokasyon at Direksyon",
-find_us_here: "Makikita Kami Dito",
-location_text: "Paraiso Ala Eh Garden Resort, Calatagan, Batangas",
-distance_title: "📍 Layo Mula sa Iyong Lokasyon",
-distance_text: "Pindutin ang button sa ibaba upang makuha ang layo mo mula sa resort.",
-use_location: "Gamitin ang Aking Lokasyon",
-open_directions: "Buksan ang Direksyon",
+        location_kicker: "Lokasyon at Direksyon",
+        find_us_here: "Makikita Kami Dito",
+        location_text: "Paraiso Ala Eh Garden Resort, Calatagan, Batangas",
+        distance_title: "📍 Layo Mula sa Iyong Lokasyon",
+        distance_text: "Pindutin ang button sa ibaba upang makuha ang layo mo mula sa resort.",
+        use_location: "Gamitin ang Aking Lokasyon",
+        open_directions: "Buksan ang Direksyon",
 
-allow_location_title: "Payagan ang Lokasyon",
-allow_location_text: "Para makuha ang layo mo mula sa Paraiso Ala Eh Garden Resort, kailangan namin ng permission sa iyong kasalukuyang lokasyon.",
-cancel_button: "Kanselahin",
-continue_button: "Magpatuloy",
-
+        allow_location_title: "Payagan ang Lokasyon",
+        allow_location_text: "Para makuha ang layo mo mula sa Paraiso Ala Eh Garden Resort, kailangan namin ng permission sa iyong kasalukuyang lokasyon.",
+        cancel_button: "Kanselahin",
+        continue_button: "Magpatuloy"
     }
-    
 };
-
 
 /* APPLY LANGUAGE */
 function applyLanguage(language) {
-    const elements = document.querySelectorAll("[data-i18n]");
+    const selectedLanguage = translations[language] ? language : "en";
 
-    elements.forEach(function (element) {
+    const textElements = document.querySelectorAll("[data-i18n]");
+
+    textElements.forEach(function (element) {
         const key = element.getAttribute("data-i18n");
 
-        if (translations[language] && translations[language][key]) {
-            element.textContent = translations[language][key];
+        if (translations[selectedLanguage] && translations[selectedLanguage][key]) {
+            element.textContent = translations[selectedLanguage][key];
         }
     });
 
@@ -349,10 +347,16 @@ function applyLanguage(language) {
     placeholderElements.forEach(function (element) {
         const key = element.getAttribute("data-i18n-placeholder");
 
-        if (translations[language] && translations[language][key]) {
-            element.placeholder = translations[language][key];
+        if (translations[selectedLanguage] && translations[selectedLanguage][key]) {
+            element.setAttribute("placeholder", translations[selectedLanguage][key]);
         }
     });
+
+    const heroLanguageButton = document.querySelector(".hero-language-menu .hero-control-btn");
+
+    if (heroLanguageButton) {
+        heroLanguageButton.textContent = selectedLanguage === "tl" ? "🌐 TL" : "🌐 EN";
+    }
 }
 
 /* UPDATE ACTIVE LANGUAGE */
@@ -387,6 +391,12 @@ function setLanguage(language) {
 
     if (dropdown) {
         dropdown.classList.remove("show");
+    }
+
+    const heroDropdown = document.getElementById("heroLanguageDropdown");
+
+    if (heroDropdown) {
+        heroDropdown.classList.remove("show");
     }
 }
 
@@ -442,6 +452,155 @@ function changeSlide(direction) {
 
 function goToSlide(index) {
     showSlide(index);
+}
+
+/* TOP IMAGE HEADER SLIDER */
+let topHeaderCurrentSlide = 0;
+let topHeaderTimer = null;
+
+function showTopHeaderSlide(index) {
+    const slides = document.querySelectorAll(".top-header-slide");
+    const dots = document.querySelectorAll(".top-dot");
+
+    if (slides.length === 0) {
+        return;
+    }
+
+    if (index >= slides.length) {
+        topHeaderCurrentSlide = 0;
+    } else if (index < 0) {
+        topHeaderCurrentSlide = slides.length - 1;
+    } else {
+        topHeaderCurrentSlide = index;
+    }
+
+    slides.forEach(function (slide) {
+        slide.classList.remove("active");
+    });
+
+    dots.forEach(function (dot) {
+        dot.classList.remove("active");
+    });
+
+    slides[topHeaderCurrentSlide].classList.add("active");
+
+    if (dots[topHeaderCurrentSlide]) {
+        dots[topHeaderCurrentSlide].classList.add("active");
+    }
+}
+
+function changeTopHeaderSlide(direction) {
+    showTopHeaderSlide(topHeaderCurrentSlide + direction);
+    restartTopHeaderSlider();
+}
+
+function goToTopHeaderSlide(index) {
+    showTopHeaderSlide(index);
+    restartTopHeaderSlider();
+}
+
+function startTopHeaderSlider() {
+    const slides = document.querySelectorAll(".top-header-slide");
+
+    if (slides.length === 0) {
+        return;
+    }
+
+    showTopHeaderSlide(0);
+
+    topHeaderTimer = setInterval(function () {
+        showTopHeaderSlide(topHeaderCurrentSlide + 1);
+    }, 4000);
+}
+
+function restartTopHeaderSlider() {
+    if (topHeaderTimer) {
+        clearInterval(topHeaderTimer);
+    }
+
+    startTopHeaderSlider();
+}
+
+/* HERO BACKGROUND AUTO SLIDER */
+function startHeroBackgroundSlider() {
+    const hero = document.getElementById("heroShowcase");
+
+    if (!hero) {
+        return;
+    }
+
+    const bgLayer = hero.querySelector(".hero-bg-layer");
+    const dots = hero.querySelectorAll(".hero-bg-dot");
+
+    if (!bgLayer) {
+        return;
+    }
+
+    const bgImages = [
+        hero.dataset.bg1,
+        hero.dataset.bg2,
+        hero.dataset.bg3,
+        hero.dataset.bg4,
+        hero.dataset.bg5
+    ].filter(Boolean);
+
+    if (bgImages.length === 0) {
+        return;
+    }
+
+    let currentBgIndex = 0;
+
+    function setHeroBackground(index) {
+        bgLayer.style.backgroundImage = "url('" + bgImages[index] + "')";
+
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle("active", i === index);
+        });
+    }
+
+    dots.forEach(function (dot, index) {
+        dot.addEventListener("click", function () {
+            currentBgIndex = index;
+            setHeroBackground(currentBgIndex);
+        });
+    });
+
+    setHeroBackground(currentBgIndex);
+
+    setInterval(function () {
+        currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+        setHeroBackground(currentBgIndex);
+    }, 4000);
+}
+
+/* HERO LANGUAGE MENU */
+function toggleHeroLanguageMenu() {
+    const dropdown = document.getElementById("heroLanguageDropdown");
+
+    if (dropdown) {
+        dropdown.classList.toggle("show");
+    }
+}
+
+function setHeroLanguage(language) {
+    setLanguage(language);
+}
+
+/* BOOKING POPUP */
+function openBookingPopup() {
+    const popup = document.getElementById("bookingPopup");
+
+    if (popup) {
+        popup.classList.add("show");
+    }
+}
+
+function closeBookingPopup() {
+    const popup = document.getElementById("bookingPopup");
+
+    if (popup) {
+        popup.classList.remove("show");
+    }
 }
 
 /* AI CHATBOT */
@@ -525,21 +684,21 @@ function sendAiMessage(event) {
             message: message
         })
     })
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        setTimeout(function () {
-            removeTypingMessage();
-            addAiMessage(data.reply || "Sorry, I do not have an answer for that yet.", "bot");
-        }, 1200);
-    })
-    .catch(function () {
-        setTimeout(function () {
-            removeTypingMessage();
-            addAiMessage("Sorry, I cannot respond right now. Please try again later.", "bot");
-        }, 1400);
-    });
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            setTimeout(function () {
+                removeTypingMessage();
+                addAiMessage(data.reply || "Sorry, I do not have an answer for that yet.", "bot");
+            }, 1200);
+        })
+        .catch(function () {
+            setTimeout(function () {
+                removeTypingMessage();
+                addAiMessage("Sorry, I cannot respond right now. Please try again later.", "bot");
+            }, 1400);
+        });
 }
 
 /* LOAD SAVED SETTINGS */
@@ -564,6 +723,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 4000);
     }
 
+    startTopHeaderSlider();
+    startHeroBackgroundSlider();
+
     document.addEventListener("click", function (event) {
         const languageMenu = document.querySelector(".language-menu");
         const dropdown = document.getElementById("languageDropdown");
@@ -571,141 +733,24 @@ document.addEventListener("DOMContentLoaded", function () {
         if (languageMenu && dropdown && !languageMenu.contains(event.target)) {
             dropdown.classList.remove("show");
         }
-    });
-});
 
-/* TOP IMAGE HEADER SLIDER */
-let topHeaderCurrentSlide = 0;
-let topHeaderTimer = null;
+        const heroMenu = document.querySelector(".hero-language-menu");
+        const heroDropdown = document.getElementById("heroLanguageDropdown");
 
-function showTopHeaderSlide(index) {
-    const slides = document.querySelectorAll(".top-header-slide");
-    const dots = document.querySelectorAll(".top-dot");
+        if (heroMenu && heroDropdown && !heroMenu.contains(event.target)) {
+            heroDropdown.classList.remove("show");
+        }
 
-    if (slides.length === 0) {
-        return;
-    }
+        const popup = document.getElementById("bookingPopup");
 
-    if (index >= slides.length) {
-        topHeaderCurrentSlide = 0;
-    } else if (index < 0) {
-        topHeaderCurrentSlide = slides.length - 1;
-    } else {
-        topHeaderCurrentSlide = index;
-    }
-
-    slides.forEach(function (slide) {
-        slide.classList.remove("active");
+        if (popup && event.target === popup) {
+            closeBookingPopup();
+        }
     });
 
-    dots.forEach(function (dot) {
-        dot.classList.remove("active");
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeBookingPopup();
+        }
     });
-
-    slides[topHeaderCurrentSlide].classList.add("active");
-
-    if (dots[topHeaderCurrentSlide]) {
-        dots[topHeaderCurrentSlide].classList.add("active");
-    }
-}
-
-function changeTopHeaderSlide(direction) {
-    showTopHeaderSlide(topHeaderCurrentSlide + direction);
-    restartTopHeaderSlider();
-}
-
-function goToTopHeaderSlide(index) {
-    showTopHeaderSlide(index);
-    restartTopHeaderSlider();
-}
-
-function startTopHeaderSlider() {
-    const slides = document.querySelectorAll(".top-header-slide");
-
-    if (slides.length === 0) {
-        return;
-    }
-
-    showTopHeaderSlide(0);
-
-    topHeaderTimer = setInterval(function () {
-        showTopHeaderSlide(topHeaderCurrentSlide + 1);
-    }, 4000);
-}
-
-function restartTopHeaderSlider() {
-    if (topHeaderTimer) {
-        clearInterval(topHeaderTimer);
-    }
-
-    startTopHeaderSlider();
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    startTopHeaderSlider();
-});
-
-/* HERO BACKGROUND AUTO SLIDER */
-document.addEventListener("DOMContentLoaded", function () {
-    const hero = document.getElementById("heroShowcase");
-
-    if (!hero) return;
-
-    const bgLayer = hero.querySelector(".hero-bg-layer");
-    const dots = hero.querySelectorAll(".hero-bg-dot");
-
-    const bgImages = [
-        hero.dataset.bg1,
-        hero.dataset.bg2,
-        hero.dataset.bg3,
-        hero.dataset.bg4,
-        hero.dataset.bg5
-    ].filter(Boolean);
-
-    let currentBgIndex = 0;
-
-    function setHeroBackground(index) {
-        if (!bgImages.length) return;
-
-        bgLayer.style.backgroundImage = `url('${bgImages[index]}')`;
-
-        dots.forEach(function (dot, i) {
-            dot.classList.toggle("active", i === index);
-        });
-    }
-
-    setHeroBackground(currentBgIndex);
-
-    setInterval(function () {
-        currentBgIndex = (currentBgIndex + 1) % bgImages.length;
-        setHeroBackground(currentBgIndex);
-    }, 4000);
-});
-
-/* HERO LANGUAGE MENU */
-function toggleHeroLanguageMenu() {
-    const dropdown = document.getElementById("heroLanguageDropdown");
-
-    if (dropdown) {
-        dropdown.classList.toggle("show");
-    }
-}
-
-function setHeroLanguage(language) {
-    setLanguage(language);
-
-    const dropdown = document.getElementById("heroLanguageDropdown");
-
-    if (dropdown) {
-        dropdown.classList.remove("show");
-    }
-}
-
-document.addEventListener("click", function (event) {
-    const heroMenu = document.querySelector(".hero-language-menu");
-    const heroDropdown = document.getElementById("heroLanguageDropdown");
-
-    if (heroMenu && heroDropdown && !heroMenu.contains(event.target)) {
-        heroDropdown.classList.remove("show");
-    }
 });
