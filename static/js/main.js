@@ -356,36 +356,38 @@ desc_karaoke_rental: "Karaoke setup rental for entertainment, celebrations, and 
         cancel_button: "Kanselahin",
         continue_button: "Magpatuloy", 
 
-        accommodations_kicker: "MGA KWARTO AT IBANG SERBISYO",
-accommodations_title: "Mga Kwarto at Stay Options",
+accommodations_kicker: "MGA KUWARTO AT TULUYAN",
+accommodations_title: "Mga Kuwarto at Tuluyan",
 accommodations_text: "Mga kuwarto, cottage, gazebo, cabana, at iba pang pahingahang lugar para sa mga bisita.",
-stay_option: "Stay Option",
+stay_option: "Tuluyan",
 
-rental_services_kicker: "MGA RENTAL SERVICE",
-rental_services_title: "Mga Rental Service",
-rental_services_text: "Karagdagang rental options para sa activities, entertainment, celebrations, at convenience ng bisita.",
-rental_service: "Rental Service",
+rental_services_kicker: "MGA SERBISYONG PINAPARENTA",
+rental_services_title: "Mga Pinaparentang Serbisyo",
+rental_services_text: "Karagdagang maaaring arkilahin para sa mga gawain, kasiyahan, pagdiriwang, at kaginhawaan ng mga bisita.",
+rental_service: "Pinaparenta",
 
-room_open_cottage: "Open Cottage",
+room_open_cottage: "Bukas na Cottage",
 room_kubo: "Kubo",
-room_villa_room: "Villa Room",
-room_modern_kubo: "Modern Kubo",
+room_villa_room: "Kuwartong Villa",
+room_modern_kubo: "Modernong Kubo",
 room_gazebo: "Gazebo",
-room_poolside_cabana: "Poolside Cabana",
-room_tent_pitching: "Tent Pitching",
-room_table_rental: "Table Rental",
-room_karaoke_rental: "Karaoke Rental",
+room_poolside_cabana: "Cabana sa Tabi ng Pool",
+room_tent_pitching: "Pagtatayo ng Tolda",
+room_table_rental: "Parentahan ng Mesa",
+room_karaoke_rental: "Parentahan ng Videoke",
 
-desc_open_cottage: "Maganda para sa araw at maramihan silong .",
+desc_open_cottage: "Mainam para sa day tour at silungan ng grupo.",
 desc_kubo: "Tradisyonal na Filipino-style na cottage.",
 desc_villa_room: "Maluwag na kuwarto para sa pamilya at grupo.",
-desc_modern_kubo: "Modernong kubo na may aircon at comfort room.",
-desc_gazebo: "Open shaded gazebo na ideal para sa family gatherings, kainan, at pagpapahinga sa resort.",
-desc_poolside_cabana: "Relaxing shaded cabana malapit sa pool, bagay para sa pamilya at maliliit na grupo.",
-desc_tent_pitching: "Designated camping space para sa guests na gusto ng outdoor overnight experience.",
-desc_table_rental: "Rental table option para sa picnic, kainan, birthday, at small group activities.",
-desc_karaoke_rental: "Karaoke setup rental para sa entertainment, celebration, at group bonding."
+desc_modern_kubo: "Modernong kubo na may aircon at sariling palikuran.",
+desc_gazebo: "May lilim na gazebo na bagay para sa salu-salo ng pamilya, kainan, at pagpapahinga sa resort.",
+desc_poolside_cabana: "Cabana malapit sa pool na bagay para sa pamilya at maliliit na grupo.",
+desc_tent_pitching: "Lugar para sa pagtatayo ng tolda para sa mga bisitang gustong mag-overnight sa labas.",
+desc_table_rental: "Mesa na maaaring arkilahin para sa picnic, kainan, birthday, at maliliit na pagtitipon.",
+desc_karaoke_rental: "Videoke na maaaring arkilahin para sa kantahan, kasiyahan, pagdiriwang, at bonding ng grupo."
     }
+
+
 };
 
 /* APPLY LANGUAGE */
