@@ -618,4 +618,136 @@ body.dark-mode .price-text {
 }
 </style>
 
+
+<style>
+/* =========================================
+   FINAL ROOMS LIGHT / DARK OVERRIDE
+   PASTE THIS BEFORE {% endblock %}
+========================================= */
+
+/* FORCE LIGHT MODE ROOMS PAGE */
+body.light-mode .rooms-page-intro h2,
+body:not(.dark-mode) .rooms-page-intro h2,
+body.light-mode .page-intro h2,
+body:not(.dark-mode) .page-intro h2 {
+    color: #071b3f !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .rooms-page-intro p,
+body:not(.dark-mode) .rooms-page-intro p,
+body.light-mode .page-intro p,
+body:not(.dark-mode) .page-intro p {
+    color: #334155 !important;
+}
+
+/* LIGHT MODE SECTION HEADER */
+body.light-mode .room-section .premium-section-header,
+body:not(.dark-mode) .room-section .premium-section-header {
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.20), transparent 35%),
+        linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-mode .room-section .premium-section-header h3,
+body:not(.dark-mode) .room-section .premium-section-header h3 {
+    color: #071b3f !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .room-section .premium-section-header p,
+body:not(.dark-mode) .room-section .premium-section-header p {
+    color: #334155 !important;
+}
+
+body.light-mode .room-section .premium-kicker,
+body:not(.dark-mode) .room-section .premium-kicker {
+    color: #7c4a00 !important;
+    background: #fff4cf !important;
+    border: 1px solid rgba(240, 189, 52, 0.55) !important;
+}
+
+/* LIGHT MODE ROOM CARDS */
+body.light-mode .room-section .room-card,
+body:not(.dark-mode) .room-section .room-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border-color: rgba(240, 189, 52, 0.55) !important;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-mode .room-section .card-content h3,
+body:not(.dark-mode) .room-section .card-content h3 {
+    color: #071b3f !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .room-section .card-content p,
+body:not(.dark-mode) .room-section .card-content p {
+    color: #334155 !important;
+}
+
+body.light-mode .room-section .card-content strong,
+body:not(.dark-mode) .room-section .card-content strong {
+    color: #071b3f !important;
+}
+
+body.light-mode .room-section .price-text,
+body:not(.dark-mode) .room-section .price-text {
+    color: #b77900 !important;
+    border-top: 1px solid #e2e8f0 !important;
+}
+
+/* DARK MODE ROOMS PAGE */
+body.dark-mode .rooms-page-intro h2,
+body.dark-mode .page-intro h2 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .rooms-page-intro p,
+body.dark-mode .page-intro p {
+    color: #dbe7fb !important;
+}
+
+body.dark-mode .room-section .premium-section-header {
+    background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 35%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.035)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22) !important;
+}
+
+body.dark-mode .room-section .premium-section-header h3 {
+    color: #ffffff !important;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.30) !important;
+}
+
+body.dark-mode .room-section .premium-section-header p {
+    color: #dce8fb !important;
+}
+
+body.dark-mode .room-section .room-card {
+    background: linear-gradient(180deg, #1a2d53 0%, #132345 100%) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22) !important;
+}
+
+body.dark-mode .room-section .card-content h3 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .room-section .card-content p {
+    color: #e8eefc !important;
+}
+
+body.dark-mode .room-section .card-content strong {
+    color: #ffffff !important;
+}
+
+body.dark-mode .room-section .price-text {
+    color: #ffd86b !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+</style>
+
 {% endblock %}
