@@ -161,7 +161,37 @@ const translations = {
         allow_location_title: "Allow Location Access",
         allow_location_text: "To calculate your distance from Paraiso Ala Eh Garden Resort, we need permission to access your current location.",
         cancel_button: "Cancel",
-        continue_button: "Continue"
+        continue_button: "Continue",
+
+        accommodations_kicker: "ACCOMMODATIONS",
+accommodations_title: "Accommodations & Stay Options",
+accommodations_text: "Rooms, cottages, gazebos, cabanas, and other relaxing stay spaces for guests.",
+stay_option: "Stay Option",
+
+rental_services_kicker: "RENTAL SERVICES",
+rental_services_title: "Rental Services",
+rental_services_text: "Extra rental options for activities, entertainment, celebrations, and guest convenience.",
+rental_service: "Rental Service",
+
+room_open_cottage: "Open Cottage",
+room_kubo: "Kubo",
+room_villa_room: "Villa Room",
+room_modern_kubo: "Modern Kubo",
+room_gazebo: "Gazebo",
+room_poolside_cabana: "Poolside Cabana",
+room_tent_pitching: "Tent Pitching",
+room_table_rental: "Table Rental",
+room_karaoke_rental: "Karaoke Rental",
+
+desc_open_cottage: "Good for day tour and group shelter.",
+desc_kubo: "Traditional Filipino-style cottage.",
+desc_villa_room: "Spacious room for family and group stays.",
+desc_modern_kubo: "Modern kubo with aircon and comfort room.",
+desc_gazebo: "Open shaded gazebo ideal for family gatherings, dining, and relaxing by the resort.",
+desc_poolside_cabana: "A relaxing shaded cabana near the pool, perfect for families and small groups.",
+desc_tent_pitching: "Designated camping space for guests who want an outdoor overnight experience.",
+desc_table_rental: "Rental table option for picnics, dining, birthdays, and small group activities.",
+desc_karaoke_rental: "Karaoke setup rental for entertainment, celebrations, and group bonding."
     },
 
     tl: {
@@ -188,7 +218,7 @@ const translations = {
         expandable_system_text: "Maaari mo pa itong i-develop gamit ang Flask, SQLite, at magdagdag ng email o payment features.",
 
         rooms_eyebrow: "Mga Tuluyan at Presyo",
-        rooms_page_title: "Pumili ng kuwarto o stay option",
+        rooms_page_title: "Pumili ng kuwarto o iba pang pamimilian",
         rooms_page_text: "Ang mga ito ay galing sa SQLite database at maaaring dagdagan anumang oras.",
 
         day_tour_cottage: "Day Tour Cottage",
@@ -324,7 +354,37 @@ const translations = {
         allow_location_title: "Payagan ang Lokasyon",
         allow_location_text: "Para makuha ang layo mo mula sa Paraiso Ala Eh Garden Resort, kailangan namin ng permission sa iyong kasalukuyang lokasyon.",
         cancel_button: "Kanselahin",
-        continue_button: "Magpatuloy"
+        continue_button: "Magpatuloy", 
+
+        accommodations_kicker: "MGA KWARTO AT IBANG SERBISYO",
+accommodations_title: "Mga Kwarto at Stay Options",
+accommodations_text: "Mga kuwarto, cottage, gazebo, cabana, at iba pang pahingahang lugar para sa mga bisita.",
+stay_option: "Stay Option",
+
+rental_services_kicker: "MGA RENTAL SERVICE",
+rental_services_title: "Mga Rental Service",
+rental_services_text: "Karagdagang rental options para sa activities, entertainment, celebrations, at convenience ng bisita.",
+rental_service: "Rental Service",
+
+room_open_cottage: "Open Cottage",
+room_kubo: "Kubo",
+room_villa_room: "Villa Room",
+room_modern_kubo: "Modern Kubo",
+room_gazebo: "Gazebo",
+room_poolside_cabana: "Poolside Cabana",
+room_tent_pitching: "Tent Pitching",
+room_table_rental: "Table Rental",
+room_karaoke_rental: "Karaoke Rental",
+
+desc_open_cottage: "Maganda para sa araw at maramihan silong .",
+desc_kubo: "Tradisyonal na Filipino-style na cottage.",
+desc_villa_room: "Maluwag na kuwarto para sa pamilya at grupo.",
+desc_modern_kubo: "Modernong kubo na may aircon at comfort room.",
+desc_gazebo: "Open shaded gazebo na ideal para sa family gatherings, kainan, at pagpapahinga sa resort.",
+desc_poolside_cabana: "Relaxing shaded cabana malapit sa pool, bagay para sa pamilya at maliliit na grupo.",
+desc_tent_pitching: "Designated camping space para sa guests na gusto ng outdoor overnight experience.",
+desc_table_rental: "Rental table option para sa picnic, kainan, birthday, at small group activities.",
+desc_karaoke_rental: "Karaoke setup rental para sa entertainment, celebration, at group bonding."
     }
 };
 
