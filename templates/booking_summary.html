@@ -1,0 +1,690 @@
+{% extends 'base.html' %}
+{% block title %}Booking Summary | Paraiso Ala Eh{% endblock %}
+
+{% block content %}
+
+<section class="booking-summary-page">
+    <div class="summary-card">
+
+        <div class="summary-header">
+            <span class="summary-kicker" data-i18n="booking_summary_kicker">
+                Reservation Overview
+            </span>
+
+            <h2 data-i18n="booking_summary_title">Booking Summary</h2>
+
+            <p data-i18n="booking_summary_text">
+                Review your reservation and payment computation.
+            </p>
+        </div>
+
+        <div class="summary-status">
+            <span data-i18n="booking_reference">Booking Reference:</span>
+            <strong>#{{ booking.id }}</strong>
+        </div>
+
+        <div class="summary-grid">
+
+            <!-- GUEST INFORMATION -->
+            <div class="summary-box">
+                <h3 data-i18n="guest_information">Guest Information</h3>
+
+                <div class="summary-row">
+                    <span data-i18n="guest_name">Name</span>
+                    <strong>{{ booking.guest_name or booking.fullname }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="contact_number_label">Contact Number</span>
+                    <strong>{{ booking.contact_number or booking.phone }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="email_label">Email</span>
+                    <strong>{{ booking.email }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="status_label">Status</span>
+                    <strong class="status-pill status-{{ booking.status|lower }}">
+                        {{ booking.status }}
+                    </strong>
+                </div>
+            </div>
+
+            <!-- BOOKING DETAILS -->
+            <div class="summary-box">
+                <h3 data-i18n="booking_details">Booking Details</h3>
+
+                <div class="summary-row">
+                    <span data-i18n="room_type_label">Room / Service Type</span>
+                    <strong>{{ booking.room_type }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="checkin_date_label">Check-in Date</span>
+                    <strong>{{ booking.checkin_date }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="checkout_date_label">Check-out Date</span>
+                    <strong>{{ booking.checkout_date }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="nights">Nights</span>
+                    <strong>{{ booking.nights }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="guests">Guests</span>
+                    <strong>{{ booking.guests }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span data-i18n="payment_method_label">Mode of Payment</span>
+                    <strong>{{ booking.payment_method or "N/A" }}</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PAYMENT COMPUTATION -->
+        <div class="payment-computation">
+            <h3 data-i18n="payment_computation">Payment Computation</h3>
+
+            <div class="compute-row">
+                <span data-i18n="room_rate">Room Rate</span>
+                <strong>₱{{ "{:,.2f}".format(booking.room_rate or 0) }}</strong>
+            </div>
+
+            <div class="compute-row">
+                <span data-i18n="accommodation_total">Accommodation Total</span>
+                <strong>₱{{ "{:,.2f}".format(booking.accommodation_total or 0) }}</strong>
+            </div>
+
+            <div class="compute-row">
+                <span data-i18n="entrance_fee">Entrance Fee</span>
+                <strong>₱{{ "{:,.2f}".format(booking.entrance_total or 0) }}</strong>
+            </div>
+
+            <div class="compute-row total">
+                <span data-i18n="total_amount">Total Amount</span>
+                <strong>₱{{ "{:,.2f}".format(booking.total_amount or 0) }}</strong>
+            </div>
+
+            <div class="compute-row downpayment">
+                <span data-i18n="required_down_payment">Required Down Payment</span>
+                <strong>₱{{ "{:,.2f}".format(booking.down_payment or 0) }}</strong>
+            </div>
+
+            <div class="compute-row balance">
+                <span data-i18n="remaining_balance">Remaining Balance</span>
+                <strong>₱{{ "{:,.2f}".format(booking.remaining_balance or 0) }}</strong>
+            </div>
+        </div>
+
+        <!-- SPECIAL REQUESTS -->
+        <div class="summary-box requests-box">
+            <h3 data-i18n="special_request_label">Special Request</h3>
+            <p>{{ booking.special_requests or booking.notes or "None" }}</p>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="summary-actions">
+            <a href="{{ url_for('home') }}" class="summary-btn secondary" data-i18n="back_to_home">
+                Back to Home
+            </a>
+
+            <a href="{{ url_for('booking') }}" class="summary-btn primary" data-i18n="book_again">
+                Book Again
+            </a>
+
+            {% if can_modify %}
+                <a href="{{ url_for('edit_booking', booking_id=booking.id) }}" class="summary-btn edit-btn" data-i18n="edit_booking">
+                    Edit Booking
+                </a>
+
+                <form method="POST"
+                      action="{{ url_for('delete_booking', booking_id=booking.id) }}"
+                      id="deleteBookingForm">
+                    <button type="button" class="summary-btn delete-btn" onclick="openDeleteModal()" data-i18n="delete_booking">
+                        Delete Booking
+                    </button>
+                </form>
+            {% else %}
+                <span class="locked-booking" data-i18n="locked_note">
+                    This booking can no longer be edited or deleted.
+                </span>
+            {% endif %}
+        </div>
+
+        {% if can_modify %}
+            <p class="modify-note" data-i18n="modify_note">
+                You can edit or delete this booking within the allowed time period.
+            </p>
+        {% else %}
+            <p class="modify-note locked" data-i18n="locked_note">
+                This booking can no longer be edited or deleted.
+            </p>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="custom-modal">
+    <div class="custom-modal-box">
+        <h3 data-i18n="delete_booking">Delete Booking</h3>
+
+        <p data-i18n="delete_confirm_text">
+            Are you sure you want to delete this booking?
+        </p>
+
+        <div class="custom-modal-actions">
+            <button type="button" class="summary-btn secondary" onclick="closeDeleteModal()" data-i18n="cancel_button">
+                Cancel
+            </button>
+
+            <button type="button" class="summary-btn delete-btn" onclick="submitDeleteForm()" data-i18n="yes_delete">
+                Yes, Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ================================
+   BOOKING SUMMARY CLEAN DESIGN
+================================ */
+
+.booking-summary-page {
+    padding: 34px 0 50px;
+}
+
+/* MAIN CARD */
+.summary-card {
+    width: min(100%, 920px);
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 28px;
+    border: 3px solid #f0bd34;
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.22);
+}
+
+/* LIGHT MODE */
+body:not(.dark-mode) .summary-card {
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.12), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    color: #071b3f;
+}
+
+/* DARK MODE */
+body.dark-mode .summary-card {
+    background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 32%),
+        linear-gradient(180deg, #17284d 0%, #101d38 100%);
+    color: #ffffff;
+}
+
+/* HEADER */
+.summary-header {
+    margin-bottom: 20px;
+}
+
+.summary-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(240, 189, 52, 0.15);
+    border: 1px solid rgba(240, 189, 52, 0.35);
+    color: #d99a10;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+body.dark-mode .summary-kicker {
+    color: #ffd86b;
+}
+
+.summary-header h2 {
+    margin: 0 0 8px;
+    font-size: 2.1rem;
+    font-weight: 900;
+}
+
+body:not(.dark-mode) .summary-header h2 {
+    color: #071b3f;
+}
+
+body.dark-mode .summary-header h2 {
+    color: #ffffff;
+}
+
+.summary-header p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+body:not(.dark-mode) .summary-header p {
+    color: #475569;
+}
+
+body.dark-mode .summary-header p {
+    color: #dbe7fb;
+}
+
+/* BOOKING REFERENCE */
+.summary-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    background: #071b3f;
+    border: 1px solid rgba(240, 189, 52, 0.45);
+}
+
+.summary-status span {
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.summary-status strong {
+    color: #ffd34e;
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+/* GRID */
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+/* INNER BOXES */
+.summary-box,
+.payment-computation {
+    padding: 20px 18px;
+    border-radius: 22px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+body:not(.dark-mode) .summary-box,
+body:not(.dark-mode) .payment-computation {
+    background: #ffffff;
+    border: 1px solid #d8e1ef;
+    color: #071b3f;
+}
+
+body.dark-mode .summary-box,
+body.dark-mode .payment-computation {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+}
+
+/* BOX HEADINGS */
+.summary-box h3,
+.payment-computation h3 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+body:not(.dark-mode) .summary-box h3,
+body:not(.dark-mode) .payment-computation h3 {
+    color: #071b3f;
+}
+
+body.dark-mode .summary-box h3,
+body.dark-mode .payment-computation h3 {
+    color: #ffffff;
+}
+
+/* ROWS */
+.summary-row,
+.compute-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 0;
+}
+
+.summary-row:not(:last-child),
+.compute-row:not(:last-child) {
+    border-bottom: 1px solid;
+}
+
+body:not(.dark-mode) .summary-row:not(:last-child),
+body:not(.dark-mode) .compute-row:not(:last-child) {
+    border-color: #d8e1ef;
+}
+
+body.dark-mode .summary-row:not(:last-child),
+body.dark-mode .compute-row:not(:last-child) {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* LABELS */
+.summary-row span,
+.compute-row span {
+    font-weight: 800;
+}
+
+body:not(.dark-mode) .summary-row span,
+body:not(.dark-mode) .compute-row span {
+    color: #475569;
+}
+
+body.dark-mode .summary-row span,
+body.dark-mode .compute-row span {
+    color: #dbe7fb;
+}
+
+/* VALUES */
+.summary-row strong,
+.compute-row strong {
+    font-weight: 900;
+    text-align: right;
+    word-break: break-word;
+}
+
+body:not(.dark-mode) .summary-row strong,
+body:not(.dark-mode) .compute-row strong {
+    color: #071b3f;
+}
+
+body.dark-mode .summary-row strong,
+body.dark-mode .compute-row strong {
+    color: #ffffff;
+}
+
+/* PAYMENT */
+.payment-computation {
+    margin-bottom: 18px;
+}
+
+.compute-row.total,
+.compute-row.downpayment,
+.compute-row.balance {
+    margin-top: 8px;
+    padding: 13px 12px;
+    border-radius: 14px;
+    border: 1px solid;
+}
+
+.compute-row.total {
+    background: rgba(20, 184, 166, 0.16);
+    border-color: rgba(20, 184, 166, 0.40);
+}
+
+.compute-row.total span,
+.compute-row.total strong {
+    color: #0f8b7c !important;
+}
+
+body.dark-mode .compute-row.total span,
+body.dark-mode .compute-row.total strong {
+    color: #5eead4 !important;
+}
+
+.compute-row.downpayment {
+    background: rgba(245, 158, 11, 0.16);
+    border-color: rgba(245, 158, 11, 0.40);
+}
+
+.compute-row.downpayment span,
+.compute-row.downpayment strong {
+    color: #dd7a00 !important;
+}
+
+body.dark-mode .compute-row.downpayment span,
+body.dark-mode .compute-row.downpayment strong {
+    color: #fbbf24 !important;
+}
+
+.compute-row.balance {
+    background: rgba(239, 68, 68, 0.16);
+    border-color: rgba(239, 68, 68, 0.40);
+}
+
+.compute-row.balance span,
+.compute-row.balance strong {
+    color: #dc2626 !important;
+}
+
+body.dark-mode .compute-row.balance span,
+body.dark-mode .compute-row.balance strong {
+    color: #f87171 !important;
+}
+
+/* STATUS */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+.status-pending {
+    background: #fff1c9;
+    color: #8a5b00 !important;
+}
+
+.status-confirmed {
+    background: #dcfce7;
+    color: #15803d !important;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #dc2626 !important;
+}
+
+/* SPECIAL REQUEST */
+.requests-box {
+    margin-bottom: 18px;
+}
+
+.requests-box p {
+    margin: 0;
+    line-height: 1.65;
+    font-weight: 700;
+}
+
+body:not(.dark-mode) .requests-box p {
+    color: #071b3f;
+}
+
+body.dark-mode .requests-box p {
+    color: #dbe7fb;
+}
+
+/* BUTTONS */
+.summary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.summary-actions form {
+    margin: 0;
+}
+
+.summary-btn {
+    min-height: 46px;
+    padding: 13px 18px;
+    border-radius: 14px;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+.summary-btn:hover {
+    transform: translateY(-2px);
+}
+
+.summary-btn.primary {
+    background: linear-gradient(90deg, #f0bd34, #f59e0b);
+    color: #071b3f;
+}
+
+.summary-btn.secondary {
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.16);
+}
+
+body:not(.dark-mode) .summary-btn.secondary {
+    background: #e2e8f0;
+    color: #071b3f;
+    border: 1px solid #cbd5e1;
+}
+
+.summary-btn.edit-btn {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.summary-btn.delete-btn {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* NOTE */
+.modify-note {
+    margin: 16px 0 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+body:not(.dark-mode) .modify-note {
+    color: #64748b;
+}
+
+body.dark-mode .modify-note {
+    color: #dbe7fb;
+}
+
+.modify-note.locked,
+.locked-booking {
+    color: #fbbf24;
+    font-weight: 800;
+}
+
+/* DELETE MODAL */
+.custom-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.58);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+}
+
+.custom-modal.show {
+    display: flex;
+}
+
+.custom-modal-box {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    border: 2px solid #f0bd34;
+    border-radius: 24px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 25px 55px rgba(15, 23, 42, 0.28);
+}
+
+.custom-modal-box h3 {
+    margin: 0 0 10px;
+    color: #101827;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.custom-modal-box p {
+    margin: 0 0 20px;
+    color: #536275;
+    line-height: 1.6;
+}
+
+.custom-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        padding: 22px 18px;
+    }
+
+    .summary-header h2 {
+        font-size: 1.65rem;
+    }
+
+    .summary-row,
+    .compute-row {
+        align-items: flex-start;
+    }
+
+    .summary-actions {
+        flex-direction: column;
+    }
+
+    .summary-btn {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+    function openDeleteModal() {
+        document.getElementById("deleteModal").classList.add("show");
+    }
+
+    function closeDeleteModal() {
+        document.getElementById("deleteModal").classList.remove("show");
+    }
+
+    function submitDeleteForm() {
+        document.getElementById("deleteBookingForm").submit();
+    }
+
+    window.addEventListener("click", function(event) {
+        const modal = document.getElementById("deleteModal");
+
+        if (event.target === modal) {
+            closeDeleteModal();
+        }
+    });
+</script>
+
+{% endblock %}

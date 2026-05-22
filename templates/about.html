@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}About | Paraiso Ala Eh{% endblock %}
+
+{% block content %}
+
+<section class="about-page">
+    <div class="about-header">
+        <h2>Discover what the resort offers</h2>
+        <p>
+            This page introduces the resort, its amenities, accommodation options,
+            and guest experience.
+        </p>
+    </div>
+
+    <!-- OPERATING HOURS -->
+    <section class="about-section">
+        <h3 class="section-title">Operating Hours</h3>
+
+        <div class="hours-grid">
+            <div class="hours-card">
+                <img src="{{ url_for('static', filename='images/resort.jpg') }}" alt="Day Tour">
+                <div class="hours-content">
+                    <span class="hours-label">🌞 DAY TOUR</span>
+                    <h4>8AM TO 6PM</h4>
+                    <p>Perfect for guests who want to enjoy the resort during the day.</p>
+                </div>
+            </div>
+
+            <div class="hours-card">
+                <img src="{{ url_for('static', filename='images/night.jpg') }}" alt="Overnight Stay">
+                <div class="hours-content">
+                    <span class="hours-label">🌙 OVERNIGHT</span>
+                    <h4>2PM TO 12NN</h4>
+                    <p>Enjoy an overnight stay with access to accommodations and amenities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AMENITIES -->
+    <section class="about-section">
+        <h3 class="section-title">Our Amenities</h3>
+
+        <div class="amenities-grid">
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/pool.jpg') }}" alt="Infinity Pool">
+                <div class="amenity-body">
+                    <h4>🏊 Infinity Pool</h4>
+                    <p>250 sqm with 6 gazebos</p>
+                </div>
+            </div>
+
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/room.jpg') }}" alt="Modern Rooms & Cottages">
+                <div class="amenity-body">
+                    <h4>🏡 Modern Rooms & Cottages</h4>
+                    <p>Various accommodation options</p>
+                </div>
+            </div>
+
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/karaoke.jpg') }}" alt="Karaoke">
+                <div class="amenity-body">
+                    <h4>🎤 Karaoke</h4>
+                    <p>Sing your heart out</p>
+                </div>
+            </div>
+
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/billiard.jpg') }}" alt="Billiard Hall">
+                <div class="amenity-body">
+                    <h4>🎱 Billiard Hall</h4>
+                    <p>Entertainment for all ages</p>
+                </div>
+            </div>
+
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/kitchen.jpg') }}" alt="Kitchen Access">
+                <div class="amenity-body">
+                    <h4>🍳 Kitchen Access</h4>
+                    <p>Prepare your own meals</p>
+                </div>
+            </div>
+
+            <div class="amenity-card">
+                <img src="{{ url_for('static', filename='images/resort.jpg') }}" alt="Spacious Parking">
+                <div class="amenity-body">
+                    <h4>🅿 Spacious Parking</h4>
+                    <p>Ample parking space</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

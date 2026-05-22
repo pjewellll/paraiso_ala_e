@@ -1,0 +1,19 @@
+Supabase/PostgreSQL conversion notes
+
+Changes made:
+- Replaced MySQL connector with psycopg PostgreSQL driver.
+- Updated app.py database wrapper for Supabase/PostgreSQL.
+- Converted database/schema.sql from MySQL syntax to PostgreSQL syntax.
+- Updated booking insert to use RETURNING id instead of MySQL lastrowid.
+- Updated column_exists logic to use information_schema.columns.
+- Updated requirements.txt for psycopg[binary].
+- Updated render.yaml to use DATABASE_URL and DB_SSLMODE=require.
+- Updated .env.example, README.md, and RENDER_DEPLOYMENT.md for Supabase setup.
+
+Required Render environment variables:
+DATABASE_URL=<your Supabase PostgreSQL connection string>
+DB_SSLMODE=require
+AUTO_INIT_DB=true
+DB_CREATE_IF_MISSING=false
+FLASK_DEBUG=0
+APP_DEBUG=false

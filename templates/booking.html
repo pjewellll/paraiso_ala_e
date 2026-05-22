@@ -1,0 +1,904 @@
+{% extends 'base.html' %}
+{% block title %}Booking | Paraiso Ala Eh{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<section class="booking-page">
+
+    <div class="booking-header">
+        <span class="eyebrow">CREATE BOOKING</span>
+        <h2>Reserve Your Stay</h2>
+        <p>
+            Complete your guest details, choose your preferred room or service,
+            and review the estimated payment before submitting.
+        </p>
+    </div>
+
+    <div class="booking-layout">
+
+        <!-- LEFT: BOOKING FORM -->
+        <section class="form-card">
+            <div class="form-card-title">
+                <span>Guest Booking Form</span>
+                <h3>Reservation Details</h3>
+            </div>
+
+            <form method="POST" action="{{ url_for('booking') }}" class="form-grid">
+
+                <label>
+                    Full Name
+                    <input type="text" name="guest_name" placeholder="Enter full name" required>
+                </label>
+
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="Enter email address" required>
+                </label>
+
+                <label>
+                    Contact Number
+                    <input type="text" name="contact_number" placeholder="Enter contact number" required>
+                </label>
+
+                <label>
+                    Room Type
+                    <select name="room_type" id="roomType" required>
+                        <option value="" data-price="0">Select a room</option>
+
+                        {% for room in rooms %}
+                            <option value="{{ room['room_name'] }}" data-price="{{ room['price'] }}">
+                                {{ room['room_name'] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <label>
+                    Check-in Date
+                    <input type="text" id="checkinDate" name="checkin_date" placeholder="Select check-in date" required>
+                </label>
+
+                <label>
+                    Check-out Date
+                    <input type="text" id="checkoutDate" name="checkout_date" placeholder="Select check-out date" required>
+                </label>
+
+                <label>
+                    Number of Guests
+                    <input type="number" name="guests" id="guestCount" min="1" value="1" required>
+                </label>
+
+                <label>
+                    Mode of Payment
+                    <select name="payment_method" id="paymentMethod" required>
+                        <option value="">Select payment method</option>
+                        <option value="GCash">GCash</option>
+                        <option value="Maya">Maya</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                    </select>
+                </label>
+
+                <label class="full-width">
+                    Special Request
+                    <textarea name="special_requests" rows="4" placeholder="Write any special requests here..."></textarea>
+                </label>
+
+                <button class="btn primary full-width booking-submit-btn" type="submit">
+                    Submit Booking
+                </button>
+            </form>
+        </section>
+
+        <!-- RIGHT: LIVE PAYMENT PREVIEW -->
+        <aside class="booking-preview-card">
+            <div class="preview-card-heading">
+                <span>PAYMENT SUMMARY</span>
+                <h3>Booking Payment Preview</h3>
+                <p>This is an estimated computation before submitting.</p>
+            </div>
+
+            <div class="preview-row">
+                <span>Selected Room</span>
+                <strong id="previewRoom">-</strong>
+            </div>
+
+            <div class="preview-row">
+                <span>Room Rate</span>
+                <strong id="previewRate">₱0.00</strong>
+            </div>
+
+            <div class="preview-row">
+                <span>Nights</span>
+                <strong id="previewNights">0</strong>
+            </div>
+
+            <div class="preview-row">
+                <span>Guests</span>
+                <strong id="previewGuests">1</strong>
+            </div>
+
+            <div class="preview-row">
+                <span>Accommodation Total</span>
+                <strong id="previewAccommodation">₱0.00</strong>
+            </div>
+
+            <div class="preview-row">
+                <span>Entrance Fee</span>
+                <strong id="previewEntrance">₱0.00</strong>
+            </div>
+
+            <div class="preview-row total">
+                <span>Total Amount</span>
+                <strong id="previewTotal">₱0.00</strong>
+            </div>
+
+            <div class="preview-row downpayment">
+                <span>Required Down Payment</span>
+                <strong id="previewDownpayment">₱0.00</strong>
+            </div>
+
+            <div class="preview-row balance">
+                <span>Remaining Balance</span>
+                <strong id="previewBalance">₱0.00</strong>
+            </div>
+        </aside>
+
+    </div>
+
+</section>
+
+<style>
+/* ================================
+   ENHANCED BOOKING PAGE DESIGN
+================================ */
+
+.booking-page {
+    padding: 25px 0 45px !important;
+}
+
+.booking-header {
+    margin-bottom: 24px !important;
+    padding: 24px 28px !important;
+    border-radius: 22px !important;
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.18), transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.18) !important;
+}
+
+.booking-header .eyebrow {
+    display: inline-block !important;
+    margin-bottom: 8px !important;
+    padding: 6px 12px !important;
+    border-radius: 999px !important;
+    background: rgba(240, 189, 52, 0.14) !important;
+    border: 1px solid rgba(240, 189, 52, 0.35) !important;
+    color: #ffd86b !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+}
+
+.booking-header h2 {
+    margin: 0 0 8px !important;
+    color: #ffffff !important;
+    font-size: 2rem !important;
+    font-weight: 900 !important;
+}
+
+.booking-header p {
+    margin: 0 !important;
+    color: #dbe7fb !important;
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+}
+
+/* Layout */
+.booking-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.85fr) !important;
+    gap: 24px !important;
+    align-items: start !important;
+}
+
+/* Form card */
+.form-card {
+    position: relative !important;
+    padding: 28px 26px 26px !important;
+    border-radius: 26px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+}
+
+.form-card::after {
+    content: "";
+    position: absolute;
+    top: -45px;
+    right: -45px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(240, 189, 52, 0.18);
+    filter: blur(4px);
+    pointer-events: none;
+}
+
+.form-card-title {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+}
+
+.form-card-title span {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(240, 189, 52, 0.14);
+    color: #b77900;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.form-card-title h3 {
+    margin: 0;
+    color: #071b3f;
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+
+/* Form grid */
+.form-grid {
+    position: relative !important;
+    z-index: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px 18px !important;
+}
+
+.form-grid label {
+    color: #071b3f !important;
+    font-size: 0.98rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.1px !important;
+}
+
+.full-width {
+    grid-column: 1 / -1 !important;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+    width: 100% !important;
+    margin-top: 8px !important;
+    min-height: 50px !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    border: 2px solid #d6deea !important;
+    background: #ffffff !important;
+    color: #071b3f !important;
+    font-size: 0.98rem !important;
+    font-weight: 700 !important;
+    outline: none !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7) !important;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease !important;
+}
+
+.form-grid textarea {
+    min-height: 120px !important;
+    resize: vertical !important;
+}
+
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus {
+    border-color: #f0bd34 !important;
+    box-shadow:
+        0 0 0 4px rgba(240, 189, 52, 0.20),
+        0 8px 18px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Submit button */
+.booking-submit-btn,
+.form-card .btn.primary,
+.form-grid button[type="submit"] {
+    min-height: 50px !important;
+    border-radius: 16px !important;
+    border: none !important;
+    background: linear-gradient(90deg, #071b3f, #0d2d66) !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.2px !important;
+    box-shadow: 0 14px 26px rgba(7, 27, 63, 0.28) !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease !important;
+}
+
+.booking-submit-btn:hover,
+.form-card .btn.primary:hover,
+.form-grid button[type="submit"]:hover {
+    transform: translateY(-2px) !important;
+    background: linear-gradient(90deg, #0d2d66, #071b3f) !important;
+    box-shadow: 0 18px 34px rgba(7, 27, 63, 0.35) !important;
+}
+
+/* Payment preview */
+.booking-preview-card {
+    position: sticky !important;
+    top: 24px !important;
+    padding: 28px 24px !important;
+    border-radius: 26px !important;
+    background:
+        radial-gradient(circle at top right, rgba(23,147,200,0.13), transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+}
+
+.booking-preview-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 22px;
+    bottom: 22px;
+    width: 6px;
+    border-radius: 0 999px 999px 0;
+    background: linear-gradient(180deg, #f0bd34, #f59e0b);
+}
+
+.preview-card-heading {
+    margin-bottom: 16px;
+}
+
+.preview-card-heading span {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(23, 147, 200, 0.10);
+    color: #0ea5e9;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.preview-card-heading h3 {
+    margin: 0 0 8px !important;
+    color: #071b3f !important;
+    font-size: 1.45rem !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+}
+
+.preview-card-heading p {
+    margin: 0 !important;
+    color: #64748b !important;
+    font-size: 0.94rem !important;
+    line-height: 1.45 !important;
+}
+
+.preview-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #dde5ef !important;
+}
+
+.preview-row span {
+    color: #516277 !important;
+    font-size: 0.98rem !important;
+    font-weight: 600 !important;
+}
+
+.preview-row strong {
+    color: #071b3f !important;
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+    text-align: right !important;
+}
+
+.preview-row.total {
+    margin-top: 4px !important;
+    padding: 15px 0 !important;
+    border-top: 2px solid #071b3f !important;
+}
+
+.preview-row.total span,
+.preview-row.total strong {
+    font-size: 1.1rem !important;
+    color: #0f766e !important;
+    font-weight: 900 !important;
+}
+
+.preview-row.downpayment strong {
+    color: #d97706 !important;
+}
+
+.preview-row.balance strong {
+    color: #dc2626 !important;
+}
+
+/* Flatpickr booked dates */
+.booked-date-mark {
+    position: relative;
+    color: #dc2626 !important;
+    font-weight: 900 !important;
+}
+
+.booked-date-mark::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #dc2626;
+    border-radius: 50%;
+}
+
+.booked-date-mark:hover {
+    background: #fee2e2 !important;
+    border-color: #dc2626 !important;
+}
+
+.flatpickr-day.selected {
+    background: #6d93e8 !important;
+    border-color: #6d93e8 !important;
+}
+
+/* Booked date modal */
+.booked-date-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.58);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+}
+
+.booked-date-modal-overlay.show {
+    display: flex;
+}
+
+.booked-date-modal-box {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    border: 2px solid #f0bd34;
+    border-radius: 24px;
+    padding: 28px 26px 24px;
+    text-align: center;
+    box-shadow: 0 25px 55px rgba(15, 23, 42, 0.28);
+    animation: bookedModalPop 0.22s ease;
+}
+
+.booked-date-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #fff7d6;
+    border: 2px solid #f0bd34;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+}
+
+.booked-date-modal-box h3 {
+    margin: 0 0 10px;
+    color: #101827;
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+
+.booked-date-modal-box p {
+    margin: 0 0 22px;
+    color: #536275;
+    font-size: 0.98rem;
+    line-height: 1.55;
+}
+
+.booked-date-modal-box button {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: #101827;
+    color: #ffffff;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.booked-date-modal-box button:hover {
+    background: #f0bd34;
+    color: #101827;
+}
+
+@keyframes bookedModalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1050px) {
+    .booking-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .booking-preview-card {
+        position: relative !important;
+        top: 0 !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .form-card,
+    .booking-preview-card {
+        padding: 22px 18px !important;
+        border-radius: 22px !important;
+    }
+
+    .form-card-title h3 {
+        font-size: 1.25rem !important;
+    }
+
+    .booking-header h2 {
+        font-size: 1.55rem !important;
+    }
+}
+</style>
+
+<!-- BOOKED DATE WARNING MODAL -->
+<div id="bookedDateModal" class="booked-date-modal-overlay">
+    <div class="booked-date-modal-box">
+        <div class="booked-date-icon">⚠️</div>
+
+        <h3>Date Already Has a Check-in</h3>
+
+        <p>
+            Someone already has a check-in scheduled on this date.
+            You may still continue, but please verify availability first.
+        </p>
+
+        <button type="button" onclick="closeBookedDateModal()">
+            Okay, I Understand
+        </button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const entranceFeePerGuest = 200;
+    const downPaymentRate = 0.50;
+
+    const roomType = document.getElementById("roomType");
+    const checkinDate = document.getElementById("checkinDate");
+    const checkoutDate = document.getElementById("checkoutDate");
+    const guestCount = document.getElementById("guestCount");
+
+    const previewRoom = document.getElementById("previewRoom");
+    const previewRate = document.getElementById("previewRate");
+    const previewNights = document.getElementById("previewNights");
+    const previewGuests = document.getElementById("previewGuests");
+    const previewAccommodation = document.getElementById("previewAccommodation");
+    const previewEntrance = document.getElementById("previewEntrance");
+    const previewTotal = document.getElementById("previewTotal");
+    const previewDownpayment = document.getElementById("previewDownpayment");
+    const previewBalance = document.getElementById("previewBalance");
+
+    let bookedDates = [];
+    let checkinPicker = null;
+    let checkoutPicker = null;
+
+    function money(value) {
+        return "₱" + Number(value || 0).toLocaleString("en-PH", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function parseDateValue(value) {
+        if (!value) {
+            return null;
+        }
+
+        const parts = value.split("-");
+        if (parts.length !== 3) {
+            return null;
+        }
+
+        const year = Number(parts[0]);
+        const month = Number(parts[1]) - 1;
+        const day = Number(parts[2]);
+
+        return new Date(year, month, day);
+    }
+
+    function calculateNights() {
+        const checkin = parseDateValue(checkinDate.value);
+        const checkout = parseDateValue(checkoutDate.value);
+
+        if (!checkin || !checkout) {
+            return 0;
+        }
+
+        const diffTime = checkout.getTime() - checkin.getTime();
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+        return diffDays > 0 ? diffDays : 0;
+    }
+
+    function getSelectedRoomRate() {
+        const selectedOption = roomType.options[roomType.selectedIndex];
+
+        if (!selectedOption) {
+            return 0;
+        }
+
+        return Number(selectedOption.dataset.price || 0);
+    }
+
+    function updatePreview() {
+        const selectedRoom = roomType.value;
+        const rate = getSelectedRoomRate();
+        const nights = calculateNights();
+        const guests = parseInt(guestCount.value || 1, 10);
+
+        const accommodationTotal = rate * nights;
+        const entranceTotal = guests * entranceFeePerGuest;
+        const totalAmount = accommodationTotal + entranceTotal;
+        const downPayment = totalAmount * downPaymentRate;
+        const balance = totalAmount - downPayment;
+
+        previewRoom.textContent = selectedRoom || "-";
+        previewRate.textContent = money(rate);
+        previewNights.textContent = nights;
+        previewGuests.textContent = guests;
+        previewAccommodation.textContent = money(accommodationTotal);
+        previewEntrance.textContent = money(entranceTotal);
+        previewTotal.textContent = money(totalAmount);
+        previewDownpayment.textContent = money(downPayment);
+        previewBalance.textContent = money(balance);
+    }
+
+    function openBookedDateModal() {
+        const modal = document.getElementById("bookedDateModal");
+
+        if (modal) {
+            modal.classList.add("show");
+        }
+    }
+
+    window.closeBookedDateModal = function () {
+        const modal = document.getElementById("bookedDateModal");
+
+        if (modal) {
+            modal.classList.remove("show");
+        }
+    };
+
+    window.addEventListener("click", function (event) {
+        const modal = document.getElementById("bookedDateModal");
+
+        if (event.target === modal) {
+            window.closeBookedDateModal();
+        }
+    });
+
+    function initializeDatePickers() {
+        checkoutPicker = flatpickr("#checkoutDate", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function () {
+                updatePreview();
+            }
+        });
+
+        checkinPicker = flatpickr("#checkinDate", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+
+            onDayCreate: function (dObj, dStr, fp, dayElem) {
+                const date = fp.formatDate(dayElem.dateObj, "Y-m-d");
+
+                if (bookedDates.includes(date)) {
+                    dayElem.classList.add("booked-date-mark");
+                    dayElem.title = "Someone already checked in on this date";
+                }
+            },
+
+            onChange: function (selectedDates, dateStr) {
+                if (selectedDates.length === 0) {
+                    updatePreview();
+                    return;
+                }
+
+                const selectedCheckin = selectedDates[0];
+                const minimumCheckoutDate = new Date(selectedCheckin);
+
+                minimumCheckoutDate.setDate(minimumCheckoutDate.getDate() + 1);
+                checkoutPicker.set("minDate", minimumCheckoutDate);
+
+                const currentCheckout = checkoutPicker.selectedDates[0];
+
+                if (currentCheckout && currentCheckout <= selectedCheckin) {
+                    checkoutPicker.clear();
+                }
+
+                if (bookedDates.includes(dateStr)) {
+                    openBookedDateModal();
+                }
+
+                updatePreview();
+            }
+        });
+    }
+
+    roomType.addEventListener("change", updatePreview);
+    guestCount.addEventListener("input", updatePreview);
+
+    fetch("{{ url_for('booked_dates') }}")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            bookedDates = data.booked_dates || [];
+            initializeDatePickers();
+            updatePreview();
+        })
+        .catch(function () {
+            bookedDates = [];
+            initializeDatePickers();
+            updatePreview();
+        });
+
+    updatePreview();
+});
+</script>
+
+<style>
+/* FINAL DARK OVERRIDE - MUST BE LAST */
+body .booking-page .form-card {
+    background: linear-gradient(180deg, #17284d 0%, #101d38 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.38) !important;
+}
+
+body .booking-page .form-card::after {
+    background: rgba(240, 189, 52, 0.20) !important;
+}
+
+body .booking-page .form-card-title {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body .booking-page .form-card-title h3 {
+    color: #ffffff !important;
+}
+
+body .booking-page .form-grid label {
+    color: #ffffff !important;
+}
+
+body .booking-page .form-grid input,
+body .booking-page .form-grid select,
+body .booking-page .form-grid textarea {
+    background: #0f1f3d !important;
+    border: 2px solid rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+}
+
+body .booking-page .form-grid input::placeholder,
+body .booking-page .form-grid textarea::placeholder {
+    color: rgba(255, 255, 255, 0.60) !important;
+}
+
+body .booking-page .form-grid select option {
+    background: #101d38 !important;
+    color: #ffffff !important;
+}
+
+body .booking-page .form-grid input:focus,
+body .booking-page .form-grid select:focus,
+body .booking-page .form-grid textarea:focus {
+    background: #152b55 !important;
+    border-color: #f0bd34 !important;
+    box-shadow: 0 0 0 4px rgba(240, 189, 52, 0.22) !important;
+}
+
+body .booking-page .booking-preview-card {
+    background: linear-gradient(180deg, #17284d 0%, #101d38 100%) !important;
+    border: 3px solid #f0bd34 !important;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.38) !important;
+}
+
+body .booking-page .preview-card-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body .booking-page .preview-card-heading h3 {
+    color: #ffffff !important;
+}
+
+body .booking-page .preview-card-heading p {
+    color: #dbe7fb !important;
+}
+
+body .booking-page .preview-row {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body .booking-page .preview-row span {
+    color: #dbe7fb !important;
+}
+
+body .booking-page .preview-row strong {
+    color: #ffffff !important;
+}
+
+body .booking-page .preview-row.total {
+    background: rgba(15, 118, 110, 0.25) !important;
+    border-color: rgba(94, 234, 212, 0.45) !important;
+}
+
+body .booking-page .preview-row.total span,
+body .booking-page .preview-row.total strong {
+    color: #5eead4 !important;
+}
+
+body .booking-page .preview-row.downpayment {
+    background: rgba(217, 119, 6, 0.20) !important;
+    border-color: rgba(251, 191, 36, 0.45) !important;
+}
+
+body .booking-page .preview-row.downpayment strong {
+    color: #fbbf24 !important;
+}
+
+body .booking-page .preview-row.balance {
+    background: rgba(220, 38, 38, 0.20) !important;
+    border-color: rgba(248, 113, 113, 0.45) !important;
+}
+
+body .booking-page .preview-row.balance strong {
+    color: #f87171 !important;
+}
+
+body .booking-page .booking-submit-btn,
+body .booking-page .form-grid button[type="submit"] {
+    background: linear-gradient(90deg, #f0bd34, #f59e0b) !important;
+    color: #071b3f !important;
+}
+</style>
+
+{% endblock %}

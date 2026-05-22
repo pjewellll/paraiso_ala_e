@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Edit Booking | Paraiso Ala Eh{% endblock %}
+
+{% block content %}
+
+<section class="booking-page">
+
+    <div class="booking-header">
+        <span class="eyebrow">Edit Booking</span>
+        <h2>Edit your reservation</h2>
+        <p>You can only edit your booking within 24 hours after submitting it.</p>
+    </div>
+
+    <section class="form-card">
+        <form method="POST" action="{{ url_for('edit_booking', booking_id=booking.id) }}" class="form-grid">
+
+            <label>
+                Full Name
+                <input type="text" name="guest_name" value="{{ booking.guest_name or booking.fullname }}" required>
+            </label>
+
+            <label>
+                Email
+                <input type="email" name="email" value="{{ booking.email }}" required>
+            </label>
+
+            <label>
+                Contact Number
+                <input type="text" name="contact_number" value="{{ booking.contact_number or booking.phone }}" required>
+            </label>
+
+            <label>
+                Room Type
+                <select name="room_type" required>
+                    {% for room in rooms %}
+                        <option value="{{ room['room_name'] }}"
+                            {% if room['room_name'] == booking.room_type %}selected{% endif %}>
+                            {{ room['room_name'] }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>
+                Check-in Date
+                <input type="date" name="checkin_date" value="{{ booking.checkin_date }}" required>
+            </label>
+
+            <label>
+                Check-out Date
+                <input type="date" name="checkout_date" value="{{ booking.checkout_date }}" required>
+            </label>
+
+            <label>
+                Number of Guests
+                <input type="number" name="guests" min="1" value="{{ booking.guests }}" required>
+            </label>
+
+            <label>
+                Mode of Payment
+                <select name="payment_method" required>
+                    <option value="GCash" {% if booking.payment_method == 'GCash' %}selected{% endif %}>GCash</option>
+                    <option value="Maya" {% if booking.payment_method == 'Maya' %}selected{% endif %}>Maya</option>
+                    <option value="Bank Transfer" {% if booking.payment_method == 'Bank Transfer' %}selected{% endif %}>Bank Transfer</option>
+                </select>
+            </label>
+
+            <label class="full-width">
+                Special Request
+                <textarea name="special_requests" rows="4">{{ booking.special_requests or booking.notes }}</textarea>
+            </label>
+
+            <div class="summary-actions full-width">
+                <button class="btn primary" type="submit">Save Changes</button>
+                <a href="{{ url_for('booking_summary', booking_id=booking.id) }}" class="btn secondary">Cancel</a>
+            </div>
+
+        </form>
+    </section>
+
+</section>
+
+{% endblock %}

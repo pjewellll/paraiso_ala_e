@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Paraiso Ala Eh{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        /* CONTACT PAGE POSITION FIX */
+        .contact-shell {
+            padding-top: 5px !important;
+        }
+
+        .contact-shell .contact-page {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .contact-shell .contact-header {
+            margin-top: 0 !important;
+            margin-bottom: 18px !important;
+        }
+
+        .contact-shell .contact-header h2 {
+            margin-top: 0 !important;
+        }
+
+        .contact-shell .contact-layout {
+            margin-top: 0 !important;
+            align-items: start !important;
+        }
+
+        .contact-shell .map-card {
+            margin-top: 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+{% if request.endpoint == 'home' %}
+<section
+    class="hero-showcase hero-left-right"
+    id="heroShowcase"
+    data-bg1="{{ url_for('static', filename='images/view.jpg') }}"
+    data-bg2="{{ url_for('static', filename='images/gazebo.jpg') }}"
+    data-bg3="{{ url_for('static', filename='images/resort.jpg') }}"
+    data-bg4="{{ url_for('static', filename='images/cafe.jpg') }}"
+    data-bg5="{{ url_for('static', filename='images/aesthetic.jpg') }}"
+>
+    <div class="hero-bg-layer"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- HERO TOP RIGHT CONTROLS -->
+<div class="hero-top-controls">
+
+    <div class="hero-language-menu">
+        <button type="button" class="hero-control-btn" onclick="toggleHeroLanguageMenu()">
+            🌐 EN
+        </button>
+
+        <div class="hero-language-dropdown" id="heroLanguageDropdown">
+            <button type="button" onclick="setHeroLanguage('en')">English ✓</button>
+            <button type="button" onclick="setHeroLanguage('tl')">Tagalog ✓</button>
+        </div>
+    </div>
+
+<button type="button" class="hero-control-btn hero-dark-btn" onclick="toggleDarkMode()" title="Toggle dark mode">
+    ☾
+</button>
+
+{% if session.get('user_id') %}
+    <a href="{{ url_for('logout') }}" class="hero-login-btn">Logout</a>
+{% else %}
+    <a href="{{ url_for('login') }}" class="hero-login-btn">Login</a>
+{% endif %}
+
+<a href="{{ url_for('home') }}" class="hero-control-logo">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Paraiso Ala Eh Logo">
+    </a>
+
+</div>
+
+</div>
+
+    <div class="hero-content-wrap hero-split-content">
+
+        <!-- LEFT SIDE TEXT -->
+        <div class="hero-text-panel">
+            <span class="hero-eyebrow">WELCOME TO</span>
+
+            <h1>Paraiso Ala Eh Garden Resort</h1>
+
+            <p class="hero-subtext">
+                Experience a relaxing tropical getaway surrounded by nature,
+                refreshing pools, cozy and peaceful resort amenities
+                perfect for families, friends, and group celebrations.
+            </p>
+
+            <div class="hero-action-buttons">
+                <a href="{{ url_for('booking') }}" class="hero-action-btn hero-book-btn">
+                    <span class="hero-btn-icon">📅</span>
+                    <span>Book Now</span>
+                </a>
+
+                <a href="{{ url_for('rooms') }}" class="hero-action-btn hero-room-btn">
+                    <span class="hero-btn-icon">🛏️</span>
+                    <span>Explore Rooms</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE 5 PHOTOS -->
+        <div class="hero-photo-panel">
+            <a href="{{ url_for('rooms') }}" class="hero-gallery-card">
+                <img src="{{ url_for('static', filename='images/view.jpg') }}" alt=".">
+                <span></span>
+            </a>
+
+            <a href="{{ url_for('rooms') }}" class="hero-gallery-card">
+                <img src="{{ url_for('static', filename='images/gazebo.jpg') }}" alt=".">
+                <span></span>
+            </a>
+
+            <a href="{{ url_for('rooms') }}" class="hero-gallery-card hero-gallery-main">
+                <img src="{{ url_for('static', filename='images/resort.jpg') }}" alt="">
+                <span></span>
+            </a>
+
+            <a href="{{ url_for('rooms') }}" class="hero-gallery-card">
+                <img src="{{ url_for('static', filename='images/cafe.jpg') }}" alt=" ">
+                <span> </span>
+            </a>
+
+            <a href="{{ url_for('rooms') }}" class="hero-gallery-card">
+                <img src="{{ url_for('static', filename='images/aesthetic.jpg') }}" alt="">
+                <span> </span>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="hero-bg-dots">
+        <span class="hero-bg-dot active"></span>
+        <span class="hero-bg-dot"></span>
+        <span class="hero-bg-dot"></span>
+        <span class="hero-bg-dot"></span>
+        <span class="hero-bg-dot"></span>
+    </div>
+</section>
+{% endif %}
+
+<header class="site-header">
+    <div class="brand">
+        <a href="{{ url_for('home') }}" class="brand-logo-link">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+                 alt="Paraiso Ala Eh Logo"
+                 class="logo">
+        </a>
+
+        <div>
+            <h1>Paraiso Ala Eh Garden Resort</h1>
+            <p>Booking / Reservation System</p>
+        </div>
+    </div>
+
+    <nav class="top-nav">
+        <a href="{{ url_for('rooms') }}"
+           class="{% if request.endpoint == 'rooms' %}active{% endif %}"
+           data-i18n="rooms">
+            Rooms
+        </a>
+
+        <a href="{{ url_for('booking') }}"
+           class="{% if request.endpoint == 'booking' %}active{% endif %}"
+           data-i18n="book_now">
+            Book Now!
+        </a>
+
+        <button type="button" class="theme-switch" onclick="toggleDarkMode()" title="Toggle dark mode">
+            <span class="switch-icon sun">☼</span>
+            <span class="switch-icon moon">☾</span>
+            <span class="switch-ball"></span>
+        </button>
+
+        <div class="language-menu">
+            <button type="button" class="icon-btn" onclick="toggleLanguageMenu()" title="Change language">
+                🌐
+            </button>
+
+            <div class="language-dropdown" id="languageDropdown">
+                <button type="button" class="language-option" data-lang="en" onclick="setLanguage('en')">
+                    <span>English</span>
+                    <span class="check-mark">✓</span>
+                </button>
+
+                <button type="button" class="language-option" data-lang="tl" onclick="setLanguage('tl')">
+                    <span>Tagalog</span>
+                    <span class="check-mark">✓</span>
+                </button>
+            </div>
+        </div>
+
+
+{% if session.get('user_id') %}
+    <a href="{{ url_for('logout') }}"
+       class="login-link">
+        Logout
+    </a>
+{% else %}
+    <a href="{{ url_for('login') }}"
+       class="login-link {% if request.endpoint == 'login' %}active{% endif %}">
+        Login
+    </a>
+{% endif %}
+
+        <a href="{{ url_for('admin_login') }}"
+           class="admin-link {% if request.endpoint == 'admin_login' %}active{% endif %}"
+           data-i18n="admin">
+            Admin
+        </a>
+    </nav>
+</header>
+
+<div class="home-layout">
+
+    <!-- LEFT SIDE NAVIGATION -->
+    <aside class="side-nav-box">
+        <span class="side-nav-title">Navigate</span>
+
+        <nav class="side-nav">
+            <a href="{{ url_for('home') }}#home"
+               class="{% if request.endpoint == 'home' %}active{% endif %}">
+                <span class="side-icon">⌂</span>
+                <span class="side-text" data-i18n="home">Home</span>
+            </a>
+
+            <a href="{{ url_for('about') }}"
+               class="{% if request.endpoint == 'about' %}active{% endif %}">
+                <span class="side-icon">i</span>
+                <span class="side-text" data-i18n="about">About</span>
+            </a>
+
+            <a href="{{ url_for('contact') }}"
+               class="{% if request.endpoint == 'contact' %}active{% endif %}">
+                <span class="side-icon">✉</span>
+                <span class="side-text" data-i18n="contact">Contact</span>
+            </a>
+
+            <a href="{{ url_for('booking') }}"
+               class="side-quick-btn {% if request.endpoint == 'booking' %}active{% endif %}">
+                <span class="side-icon">▣</span>
+                <span class="side-text" data-i18n="book_now">Book Now!</span>
+            </a>
+        </nav>
+
+        <div class="side-photo-box">
+            <span class="side-photo-title">Preview</span>
+            <img src="{{ url_for('static', filename='images/resort.jpg') }}"
+                 alt="Resort Preview">
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="page-shell">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+<footer class="site-footer">
+    <p>&copy; 2026 Paraiso Ala Eh Garden Resort. Python Flask version.</p>
+</footer>
+
+<!-- AI CHATBOT WIDGET -->
+<div class="ai-chat-widget" id="aiChatWidget">
+    <div class="ai-chat-header">
+        <div>
+            <strong>Paraiso Ala Eh AI Assistant</strong>
+            <span>Ask about rooms, booking, payment, or location</span>
+        </div>
+
+        <button type="button" onclick="toggleAiChat()">×</button>
+    </div>
+
+    <div class="ai-chat-body" id="aiChatBody">
+        <div class="ai-message bot">
+            Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?
+        </div>
+    </div>
+
+    <div class="ai-chat-suggestions">
+        <button type="button" onclick="sendSuggestion('How can I book a room?')">Booking</button>
+        <button type="button" onclick="sendSuggestion('What rooms are available?')">Rooms</button>
+        <button type="button" onclick="sendSuggestion('What are your amenities?')">Amenities</button>
+        <button type="button" onclick="sendSuggestion('Where is the resort located?')">Location</button>
+    </div>
+
+    <form class="ai-chat-form" onsubmit="sendAiMessage(event)">
+        <input type="text"
+               id="aiChatInput"
+               placeholder="Ask about rooms, payment, location..."
+               autocomplete="off">
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<button type="button"
+        class="ai-chat-toggle"
+        onclick="toggleAiChat()"
+        title="Ask an inquiry"
+        aria-label="Ask an inquiry">
+    <svg class="inquiry-chat-icon"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 10.5H16.5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"/>
+        <path d="M7.5 14H13"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"/>
+        <path d="M12 21C16.9706 21 21 17.1944 21 12.5C21 7.80558 16.9706 4 12 4C7.02944 4 3 7.80558 3 12.5C3 14.1543 3.50047 15.6983 4.36515 17.0029L3.5 21L7.70379 19.9786C8.97067 20.6308 10.4329 21 12 21Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"/>
+    </svg>
+</button>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

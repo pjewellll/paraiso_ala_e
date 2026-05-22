@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Paraiso Ala Eh</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #101827;
+            background:
+                linear-gradient(rgba(239, 248, 255, 0.86), rgba(255, 251, 235, 0.92)),
+                url("{{ url_for('static', filename='images/resort.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .admin-page {
+            min-height: 100vh;
+            padding: 26px;
+            overflow-x: hidden;
+        }
+
+        .dashboard-shell {
+            max-width: 1380px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 28px;
+            border-radius: 36px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 70px rgba(15, 23, 42, 0.20);
+            backdrop-filter: blur(14px);
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 26px;
+            overflow: hidden;
+        }
+
+        .admin-sidebar {
+            min-height: calc(100vh - 110px);
+            border-radius: 30px;
+            padding: 26px 20px;
+            background: linear-gradient(180deg, #08233f, #0f2747);
+            color: white;
+            box-shadow: 0 20px 45px rgba(8, 35, 63, 0.28);
+            position: sticky;
+            top: 26px;
+        }
+
+        .admin-logo-wrap {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-logo-wrap img {
+            width: 86px !important;
+            height: 86px !important;
+            max-width: 86px !important;
+            max-height: 86px !important;
+            min-width: 86px !important;
+            min-height: 86px !important;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f0bd34;
+            background: white;
+            display: block;
+            margin: 0 auto 12px;
+        }
+
+        .admin-logo-wrap h2 {
+            margin: 0;
+            color: #f0bd34;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+        }
+
+        .admin-logo-wrap p {
+            margin: 6px 0 0;
+            color: #dce8ff;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .admin-menu {
+            display: grid;
+            gap: 10px;
+        }
+
+        .admin-menu a {
+            min-height: 48px;
+            padding: 0 16px;
+            border-radius: 16px;
+            color: #eaf2ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+        .admin-menu a.active,
+        .admin-menu a:hover {
+            background: linear-gradient(135deg, #f0bd34, #ffe08a);
+            color: #101827;
+            transform: translateX(4px);
+        }
+
+        .sidebar-profile {
+            margin-top: 34px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-logo {
+            width: 52px !important;
+            height: 52px !important;
+            min-width: 52px !important;
+            min-height: 52px !important;
+            border-radius: 50% !important;
+            overflow: hidden !important;
+            background: white !important;
+            border: 3px solid #f0bd34 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22) !important;
+        }
+
+        .profile-logo img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+        }
+
+        .sidebar-profile strong {
+            display: block;
+            color: white;
+        }
+
+        .sidebar-profile span {
+            color: #cbd5e1;
+            font-size: 0.82rem;
+        }
+
+        .admin-main {
+            min-width: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .welcome h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #08233f;
+        }
+
+        .welcome p {
+            margin: 8px 0 0;
+            color: #52627a;
+            font-weight: 600;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            border: 2px solid #d7dde8;
+            background: white;
+            color: #101827;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        }
+
+        .admin-btn.primary {
+            background: #08233f;
+            color: white;
+            border-color: #08233f;
+        }
+
+        .admin-btn.gold {
+            background: #f0bd34;
+            color: #101827;
+            border-color: #f0bd34;
+        }
+
+        .icon-btn {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 0;
+            background: white;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            cursor: pointer;
+            transition: 0.22s ease;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+            background: #fff7d6;
+        }
+
+        .flash-stack {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .flash {
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-weight: 800;
+            background: #e0f2fe;
+            color: #075985;
+            border: 1px solid #7dd3fc;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #86efac;
+        }
+
+        .flash.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fca5a5;
+        }
+
+        .search-panel {
+            display: none;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid #dbe3ef;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .search-panel.show {
+            display: grid;
+        }
+
+        .search-panel input {
+            width: 100%;
+            min-height: 44px;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 0 14px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-panel input:focus {
+            border-color: #f0bd34;
+            box-shadow: 0 0 0 4px rgba(240, 189, 52, 0.18);
+        }
+
+        .search-panel button {
+            min-height: 44px;
+            padding: 0 16px;
+            border: 0;
+            border-radius: 14px;
+            background: #08233f;
+            color: white;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .notif-wrap {
+            position: relative;
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 11px;
+            height: 11px;
+            background: #ef4444;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .notif-panel {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 54px;
+            width: 290px;
+            background: white;
+            border: 1px solid #dbe3ef;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .notif-panel.show {
+            display: block;
+        }
+
+        .notif-header {
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #08233f, #0f4c81);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notif-header span {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f0bd34;
+            color: #101827;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+        }
+
+        .notif-item {
+            display: block;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #101827;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .notif-item:hover {
+            background: #fff7d6;
+        }
+
+        .notif-item strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .notif-item small {
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .notif-empty {
+            padding: 18px;
+            text-align: center;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1.25fr 0.9fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(214, 221, 232, 0.9);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.10);
+        }
+
+        .card.dark {
+            background:
+                linear-gradient(135deg, rgba(8,35,63,0.98), rgba(15,39,71,0.96)),
+                url("{{ url_for('static', filename='images/resort.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .card-title h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 900;
+        }
+
+        .card-title a {
+            color: #0f4c81;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .overall-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .metric {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .metric-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(240, 189, 52, 0.18);
+            color: #f0bd34;
+            font-size: 1.2rem;
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 1.7rem;
+            font-weight: 900;
+        }
+
+        .metric span {
+            color: #dce8ff;
+            font-size: 0.82rem;
+        }
+
+        .chart-box {
+            height: 225px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            border: 1px solid #e5e7eb;
+            padding: 14px;
+        }
+
+        .revenue-total {
+            font-size: 1.9rem;
+            font-weight: 900;
+            margin: 6px 0 4px;
+            color: #08233f;
+        }
+
+        .revenue-sub {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .donut {
+            width: 150px;
+            height: 150px;
+            margin: 18px auto;
+            border-radius: 50%;
+            background: conic-gradient(#08233f 0 68%, #f0bd34 68% 100%);
+            display: grid;
+            place-items: center;
+        }
+
+        .donut-inner {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: white;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            font-weight: 900;
+            color: #08233f;
+        }
+
+        .middle-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.6fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .reminder-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .reminder-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 14px;
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        /* BOOKINGS IN PROCESS */
+        .booking-process-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .process-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 20px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            transition: 0.25s ease;
+        }
+
+        .process-card:hover {
+            transform: translateY(-4px);
+            border-color: #f0bd34;
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.16);
+        }
+
+        .process-image-wrap {
+            width: 120px;
+            height: 110px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #f0bd34;
+            background: #e5e7eb;
+        }
+
+        .process-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: 0.3s ease;
+        }
+
+        .process-card:hover .process-image-wrap img {
+            transform: scale(1.08);
+        }
+
+        .process-info {
+            min-width: 0;
+        }
+
+        .process-info h4 {
+            margin: 10px 0 8px;
+            color: #101827;
+            font-size: 1.05rem;
+            font-weight: 900;
+        }
+
+        .process-info p {
+            margin: 0 0 8px;
+            color: #334155;
+            line-height: 1.25;
+        }
+
+        .process-info small {
+            color: #101827;
+            font-weight: 800;
+        }
+
+        .badge {
+            display: inline-flex;
+            min-height: 28px;
+            padding: 0 10px;
+            align-items: center;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 900;
+        }
+
+        .badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.confirmed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge.cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            width: 100%;
+        }
+
+        .table-wrap {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 780px;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 13px 10px;
+            font-size: 0.82rem;
+            color: #64748b;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 14px 10px;
+            border-bottom: 1px solid #eef2f7;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        .guest-name {
+            font-weight: 900;
+            color: #08233f;
+        }
+
+        .guest-sub {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .amount {
+            display: inline-block;
+            background: #ecfdf5;
+            color: #047857;
+            padding: 6px 10px;
+            border-radius: 999px;
+            margin-bottom: 6px;
+            font-weight: 900;
+        }
+
+        .status-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .status-form select {
+            min-height: 38px;
+            border: 1px solid #cfd8e3;
+            border-radius: 12px;
+            padding: 0 10px;
+            font-weight: 800;
+            background: white;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            min-height: 38px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #08233f;
+        }
+
+        .cancel-btn {
+            background: #dc2626;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .quick-action {
+            padding: 14px;
+            border-radius: 16px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            text-decoration: none;
+            color: #101827;
+            font-weight: 900;
+            transition: 0.2s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-3px);
+            background: #fff7d6;
+            border-color: #f0bd34;
+        }
+
+        .quick-action span {
+            display: block;
+            color: #64748b;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .full-width-messages {
+            margin-top: 18px;
+            padding: 24px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-label {
+            display: inline-block;
+            margin-bottom: 6px;
+            color: #f0bd34;
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+
+        .messages-header h3 {
+            margin: 0;
+            color: #08233f;
+            font-size: 1.6rem;
+            font-weight: 900;
+        }
+
+        .messages-header p {
+            margin: 6px 0 0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .message-count {
+            width: 72px;
+            height: 72px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #08233f, #0f4c81);
+            color: #f0bd34;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 900;
+            box-shadow: 0 12px 24px rgba(8, 35, 63, 0.22);
+        }
+
+        .message-count span {
+            display: block;
+            color: #eaf2ff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: -10px;
+        }
+
+        .messages-grid-full {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .message-card {
+            position: relative;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            border: 1px solid #dbe3ef;
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+            transition: 0.22s ease;
+        }
+
+        .message-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 6px;
+            background: linear-gradient(180deg, #f0bd34, #0f4c81);
+        }
+
+        .message-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.14);
+            border-color: #f0bd34;
+        }
+
+        .message-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .message-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #08233f;
+            color: #f0bd34;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border: 2px solid #f0bd34;
+            flex-shrink: 0;
+        }
+
+        .message-card h4 {
+            margin: 0 0 4px;
+            color: #08233f;
+            font-size: 1.05rem;
+            font-weight: 900;
+        }
+
+        .message-email {
+            color: #2563eb;
+            font-size: 0.88rem;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .message-text {
+            min-height: 70px;
+            margin: 0 0 14px;
+            padding: 14px;
+            border-radius: 14px;
+            background: #f8fafc;
+            color: #475569;
+            line-height: 1.55;
+            font-size: 0.94rem;
+        }
+
+        .message-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 12px;
+        }
+
+        .message-date {
+            color: #94a3b8;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .reply-btn {
+            min-height: 34px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: none;
+            background: #f0bd34;
+            color: #101827;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .reply-btn:hover {
+            background: #08233f;
+            color: white;
+        }
+
+        .empty-state {
+            padding: 24px;
+            text-align: center;
+            color: #64748b;
+            border-radius: 18px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .message-empty {
+            display: grid;
+            gap: 6px;
+        }
+
+        .message-empty p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .reply-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .reply-modal-overlay.show {
+            display: flex;
+        }
+
+        .reply-modal-box {
+            width: 100%;
+            max-width: 580px;
+            background: white;
+            border-radius: 24px;
+            border: 2px solid #f0bd34;
+            box-shadow: 0 25px 50px rgba(16, 24, 39, 0.25);
+            overflow: hidden;
+        }
+
+        .reply-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, #eef7ff 0%, #f8f3d4 100%);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .reply-modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #101827;
+        }
+
+        .reply-close {
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 50%;
+            background: #101827;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .reply-form {
+            padding: 22px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .reply-form label {
+            display: grid;
+            gap: 8px;
+            font-weight: 800;
+            color: #334155;
+        }
+
+        .reply-form input,
+        .reply-form textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: #101827;
+            background: #f8fafc;
+        }
+
+        .reply-form textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .reply-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 1150px) {
+            .dashboard-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                position: relative;
+                top: auto;
+                min-height: auto;
+            }
+
+            .admin-menu {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .dashboard-grid,
+            .middle-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .messages-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .messages-grid-full {
+                grid-template-columns: 1fr;
+            }
+
+            .message-count {
+                width: 100%;
+                height: auto;
+                padding: 14px;
+                display: block;
+            }
+
+            .message-count span {
+                margin-top: 2px;
+            }
+
+            table {
+                min-width: 720px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .admin-page {
+                padding: 12px;
+            }
+
+            .dashboard-shell {
+                padding: 16px;
+                border-radius: 24px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .admin-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .overall-grid,
+            .booking-process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .notif-panel {
+                right: auto;
+                left: 0;
+                width: 260px;
+            }
+
+            .process-card {
+                grid-template-columns: 1fr;
+            }
+
+            .process-image-wrap {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+{% set contact_count = contacts|length if contacts else 0 %}
+{% set notification_count = stats.pending_bookings + contact_count %}
+
+{% set booking_images = {
+    'Gazebo': 'gazebo.jpg',
+    'Poolside Cabana': 'cabana.jpg',
+    'Open Cottage': 'cafe.jpg',
+    'Kubo': 'aesthetic.jpg',
+    'Villa Room': 'villasure.jpg',
+    'Modern Kubo': 'modern.jpg',
+    'Table Rental': 'table.jpg',
+    'Tent Pitching': 'tent.jpg',
+    'Karaoke Rental': 'karaoke.jpg',
+    'Day Tour Cottage': 'cafe.jpg',
+    'Standard Room': 'villasure.jpg',
+    'Deluxe Room': 'modern.jpg',
+    'Family Villa': 'villasure.jpg'
+} %}
+
+<div class="admin-page">
+    <div class="dashboard-shell">
+
+        <aside class="admin-sidebar">
+            <div class="admin-logo-wrap">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Paraiso Ala Eh Logo">
+                <h2>PARAISO<br>ALA EH</h2>
+                <p>Garden Resort</p>
+            </div>
+
+            <nav class="admin-menu">
+                <a href="#" class="active">▦ Dashboard</a>
+                <a href="#recent-bookings">▣ Bookings</a>
+                <a href="{{ url_for('rooms') }}">▤ Rooms</a>
+                <a href="#messages">✉ Messages</a>
+                <a href="#reports">▧ Reports</a>
+                <a href="{{ url_for('home') }}">⌂ Back to Site</a>
+            </nav>
+
+            <div class="sidebar-profile">
+                <div class="profile-logo">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Paraiso Ala Eh Logo">
+                </div>
+
+                <div>
+                    <strong>{{ session.get('admin_username', 'Admin') }}</strong>
+                    <span>Resort Manager</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+
+            <div class="topbar">
+                <div class="welcome">
+                    <h1>Welcome, Admin!</h1>
+                    <p>Manage bookings, payments, guest messages, and reservation status.</p>
+                </div>
+
+                <div class="top-actions">
+                    <a href="{{ url_for('booking') }}" class="admin-btn primary">+ Add Booking</a>
+
+                    <button class="icon-btn" type="button" onclick="toggleSearchPanel()" title="Search">
+                        🔍
+                    </button>
+
+                    <div class="notif-wrap">
+                        <button class="icon-btn" type="button" onclick="toggleNotifPanel()" title="Notifications">
+                            🕭
+                        </button>
+
+                        {% if notification_count > 0 %}
+                            <span class="notif-dot"></span>
+                        {% endif %}
+
+                        <div class="notif-panel" id="notifPanel">
+                            <div class="notif-header">
+                                <strong>Notifications</strong>
+                                <span>{{ notification_count }}</span>
+                            </div>
+
+                            {% if stats.pending_bookings > 0 %}
+                                <a href="#recent-bookings" class="notif-item">
+                                    <strong>Pending Bookings</strong>
+                                    <small>{{ stats.pending_bookings }} booking/s need review</small>
+                                </a>
+                            {% endif %}
+
+                            {% if contacts %}
+                                <a href="#messages" class="notif-item">
+                                    <strong>Guest Messages</strong>
+                                    <small>{{ contact_count }} message/s received</small>
+                                </a>
+                            {% endif %}
+
+                            {% if notification_count == 0 %}
+                                <div class="notif-empty">
+                                    No new notifications.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('admin_logout') }}" class="admin-btn gold">Logout</a>
+                </div>
+            </div>
+
+            <div class="search-panel" id="searchPanel">
+                <input type="text"
+                       id="adminSearchInput"
+                       placeholder="Search guest name, email, room, status, or message..."
+                       oninput="filterAdminDashboard()">
+
+                <button type="button" onclick="clearAdminSearch()">Clear</button>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-stack">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% set revenue = namespace(total=0) %}
+            {% for booking in bookings %}
+                {% set revenue.total = revenue.total + (booking.total_amount or 0) %}
+            {% endfor %}
+
+            <section class="dashboard-grid">
+                <div class="card dark">
+                    <div class="card-title">
+                        <h3>📅 Overall Information</h3>
+                        <span>•••</span>
+                    </div>
+
+                    <div class="overall-grid">
+                        <div class="metric">
+                            <div class="metric-icon">📋</div>
+                            <div>
+                                <strong>{{ stats.total_bookings }}</strong>
+                                <span>Total Bookings</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-icon">⏳</div>
+                            <div>
+                                <strong>{{ stats.pending_bookings }}</strong>
+                                <span>Pending</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-icon">✅</div>
+                            <div>
+                                <strong>{{ stats.confirmed_bookings }}</strong>
+                                <span>Confirmed</span>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-icon">✕</div>
+                            <div>
+                                <strong>{{ stats.cancelled_bookings }}</strong>
+                                <span>Cancelled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card weekly-progress-card">
+    <div class="card-title">
+        <h3>📈 Weekly Booking Progress</h3>
+        <span id="weeklyTotalLabel">This Week</span>
+    </div>
+
+    <!-- Hidden booking dates from database -->
+    <div id="bookingDateData" style="display: none;">
+        {% for booking in bookings %}
+            <span class="booking-date-source"
+                  data-checkin="{{ booking.checkin_date }}">
+            </span>
+        {% endfor %}
+    </div>
+
+    <div class="chart-box dynamic-chart-box">
+        <svg id="weeklyBookingChart" viewBox="0 0 500 230" width="100%" height="100%">
+            <!-- JS will draw the chart here -->
+        </svg>
+    </div>
+</div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <h3>💰 Revenue</h3>
+                        <span>•••</span>
+                    </div>
+
+                    <div class="revenue-total">
+                        ₱{{ "{:,.2f}".format(revenue.total) }}
+                    </div>
+                    <div class="revenue-sub">Based on recent bookings</div>
+
+                    <div class="donut">
+                        <div class="donut-inner">
+                            Total<br>Revenue
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="middle-grid">
+                <div class="card">
+                    <div class="card-title">
+                        <h3>✅ Today’s Reminders</h3>
+                    </div>
+
+                    <div class="reminder-list">
+                        <div class="reminder-item">
+                            <strong>Check booking requests</strong>
+                            <span>Today</span>
+                        </div>
+                        <div class="reminder-item">
+                            <strong>Confirm pending reservations</strong>
+                            <span>Today</span>
+                        </div>
+                        <div class="reminder-item">
+                            <strong>Review guest inquiries</strong>
+                            <span>Today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <h3>👥 Bookings In Process</h3>
+                        <a href="#recent-bookings">View all</a>
+                    </div>
+
+                    <div class="booking-process-grid">
+                        {% for booking in bookings[:2] %}
+                            {% set booked_type = booking.room_type if booking.room_type else 'Booking' %}
+                            {% set image_file = booking_images.get(booked_type, 'view.jpg') %}
+                            {% set image_url = url_for('static', filename='images/' ~ image_file) %}
+                            {% set fallback_url = url_for('static', filename='images/view.jpg') %}
+
+                            <div class="process-card">
+                                <div class="process-image-wrap">
+                                    <img
+                                        src="{{ image_url }}"
+                                        alt="{{ booked_type }}"
+                                        onerror="this.onerror=null; this.src='{{ fallback_url }}';"
+                                    >
+                                </div>
+
+                                <div class="process-info">
+                                    {% if booking.status == 'Confirmed' %}
+                                        <span class="badge confirmed">CONFIRMED</span>
+                                    {% elif booking.status == 'Cancelled' %}
+                                        <span class="badge cancelled">CANCELLED</span>
+                                    {% else %}
+                                        <span class="badge pending">PENDING</span>
+                                    {% endif %}
+
+                                    <h4>{{ booked_type }}</h4>
+                                    <p>{{ booking.guest_name or booking.fullname }}</p>
+                                    <p>{{ booking.checkin_date }} - {{ booking.checkout_date }}</p>
+                                    <small>{{ booking.guests }} guest/s</small>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="empty-state">No active bookings yet.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="bottom-grid">
+                <div class="card" id="recent-bookings">
+                    <div class="card-title">
+                        <h3>📋 Recent Bookings</h3>
+                    </div>
+
+                    {% if bookings %}
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Guest</th>
+                                        <th>Room</th>
+                                        <th>Dates</th>
+                                        <th>Guests</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Update</th>
+                                        <th>Cancel</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for booking in bookings %}
+                                        <tr>
+                                            <td>
+                                                <div class="guest-name">{{ booking.guest_name or booking.fullname }}</div>
+                                                <div class="guest-sub">
+                                                    {{ booking.email }}<br>
+                                                    {{ booking.contact_number or booking.phone }}
+                                                </div>
+                                            </td>
+
+                                            <td>{{ booking.room_type }}</td>
+
+                                            <td>
+                                                <strong>In:</strong> {{ booking.checkin_date }}<br>
+                                                <strong>Out:</strong> {{ booking.checkout_date }}
+                                            </td>
+
+                                            <td>{{ booking.guests }}</td>
+
+                                            <td>
+                                                <div class="amount">
+                                                    ₱{{ "{:,.2f}".format(booking.total_amount or 0) }}
+                                                </div>
+                                                <div class="guest-sub">
+                                                    Down: ₱{{ "{:,.2f}".format(booking.down_payment or 0) }}<br>
+                                                    Balance: ₱{{ "{:,.2f}".format(booking.remaining_balance or 0) }}
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                {% if booking.status == 'Confirmed' %}
+                                                    <span class="badge confirmed">Confirmed</span>
+                                                {% elif booking.status == 'Cancelled' %}
+                                                    <span class="badge cancelled">Cancelled</span>
+                                                {% else %}
+                                                    <span class="badge pending">Pending</span>
+                                                {% endif %}
+                                            </td>
+
+                                            <td>
+                                                {% if booking.status != 'Cancelled' %}
+                                                    <form method="POST"
+                                                          action="{{ url_for('update_booking_status', booking_id=booking.id) }}"
+                                                          class="status-form">
+                                                        <select name="status">
+                                                            <option value="Pending" {% if booking.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                            <option value="Confirmed" {% if booking.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                                            <option value="Cancelled" {% if booking.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                                        </select>
+
+                                                        <button type="submit" class="save-btn">Save</button>
+                                                    </form>
+                                                {% else %}
+                                                    Locked
+                                                {% endif %}
+                                            </td>
+
+                                            <td>
+                                                {% if booking.status != 'Cancelled' %}
+                                                    <form method="POST"
+                                                          action="{{ url_for('cancel_booking', booking_id=booking.id) }}"
+                                                          onsubmit="return confirm('Cancel this booking?');">
+                                                        <button type="submit" class="cancel-btn">Cancel</button>
+                                                    </form>
+                                                {% else %}
+                                                    Cancelled
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">No bookings yet.</div>
+                    {% endif %}
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <h3>⚡ Quick Actions</h3>
+                    </div>
+
+                    <div class="quick-actions">
+                        <a class="quick-action" href="{{ url_for('booking') }}">
+                            <div>
+                                Add New Booking
+                                <span>Create a reservation</span>
+                            </div>
+                            →
+                        </a>
+
+                        <a class="quick-action" href="{{ url_for('rooms') }}">
+                            <div>
+                                Manage Rooms
+                                <span>View available rooms</span>
+                            </div>
+                            →
+                        </a>
+
+                        <a class="quick-action" href="#messages">
+                            <div>
+                                View Messages
+                                <span>Read guest inquiries</span>
+                            </div>
+                            →
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card full-width-messages" id="messages">
+                <div class="messages-header">
+                    <div>
+                        <span class="section-label">Messages</span>
+                        <h3>✉ Guest Messages</h3>
+                        <p>Latest inquiries submitted through the contact page.</p>
+                    </div>
+
+                    <div class="message-count">
+                        {{ contact_count }}
+                        <span>Total</span>
+                    </div>
+                </div>
+
+                {% if contacts %}
+                    <div class="messages-grid-full">
+                        {% for contact in contacts %}
+                            <article class="message-card">
+                                <div class="message-top">
+                                    <div class="message-avatar">
+                                        {{ contact.name[0]|upper }}
+                                    </div>
+
+                                    <div>
+                                        <h4>{{ contact.name }}</h4>
+                                        <span class="message-email">{{ contact.email }}</span>
+                                    </div>
+                                </div>
+
+                                <p class="message-text">
+                                    {{ contact.message }}
+                                </p>
+
+                                <div class="message-footer">
+                                    <span class="message-date">
+                                        {{ contact.created_at }}
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        class="reply-btn"
+                                        data-contact-id="{{ contact.id }}"
+                                        data-contact-name="{{ contact.name }}"
+                                        data-contact-email="{{ contact.email }}"
+                                        onclick="openReplyModalFromButton(this)">
+                                        Reply
+                                    </button>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state message-empty">
+                        <strong>No guest messages yet.</strong>
+                        <p>Messages from the contact page will appear here.</p>
+                    </div>
+                {% endif %}
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<div id="replyModal" class="reply-modal-overlay">
+    <div class="reply-modal-box">
+        <div class="reply-modal-header">
+            <h3>Reply to Guest</h3>
+            <button type="button" class="reply-close" onclick="closeReplyModal()">×</button>
+        </div>
+
+        <form method="POST" action="{{ url_for('send_reply') }}" class="reply-form">
+            <input type="hidden" name="contact_id" id="replyContactId">
+
+            <label>
+                Guest Name
+                <input type="text" id="replyGuestName" readonly>
+            </label>
+
+            <label>
+                Email
+                <input type="email" name="email" id="replyEmail" readonly>
+            </label>
+
+            <label>
+                Subject
+                <input type="text" name="subject" placeholder="Enter subject" required>
+            </label>
+
+            <label>
+                Message
+                <textarea name="message" rows="6" placeholder="Write your reply here..." required></textarea>
+            </label>
+
+            <div class="reply-modal-actions">
+                <button type="button" class="admin-btn" onclick="closeReplyModal()">Cancel</button>
+                <button type="submit" class="admin-btn primary">Send Reply</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openReplyModalFromButton(button) {
+        const contactId = button.dataset.contactId;
+        const guestName = button.dataset.contactName;
+        const email = button.dataset.contactEmail;
+
+        openReplyModal(contactId, guestName, email);
+    }
+
+    function openReplyModal(contactId, guestName, email) {
+        document.getElementById("replyContactId").value = contactId;
+        document.getElementById("replyGuestName").value = guestName;
+        document.getElementById("replyEmail").value = email;
+        document.getElementById("replyModal").classList.add("show");
+    }
+
+    function closeReplyModal() {
+        document.getElementById("replyModal").classList.remove("show");
+    }
+
+    function toggleSearchPanel() {
+        const panel = document.getElementById("searchPanel");
+        const input = document.getElementById("adminSearchInput");
+
+        if (!panel) return;
+
+        panel.classList.toggle("show");
+
+        if (panel.classList.contains("show") && input) {
+            input.focus();
+        }
+    }
+
+    function clearAdminSearch() {
+        const input = document.getElementById("adminSearchInput");
+
+        if (input) {
+            input.value = "";
+        }
+
+        filterAdminDashboard();
+    }
+
+    function filterAdminDashboard() {
+        const input = document.getElementById("adminSearchInput");
+        const searchValue = input ? input.value.toLowerCase().trim() : "";
+
+        const bookingRows = document.querySelectorAll("#recent-bookings tbody tr");
+        const messageCards = document.querySelectorAll("#messages .message-card");
+
+        bookingRows.forEach(function(row) {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchValue) ? "" : "none";
+        });
+
+        messageCards.forEach(function(card) {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(searchValue) ? "" : "none";
+        });
+    }
+
+    function toggleNotifPanel() {
+        const panel = document.getElementById("notifPanel");
+
+        if (panel) {
+            panel.classList.toggle("show");
+        }
+    }
+
+    window.addEventListener("click", function(event) {
+        const replyModal = document.getElementById("replyModal");
+        const notifWrap = document.querySelector(".notif-wrap");
+        const notifPanel = document.getElementById("notifPanel");
+
+        if (replyModal && event.target === replyModal) {
+            closeReplyModal();
+        }
+
+        if (notifWrap && notifPanel && !notifWrap.contains(event.target)) {
+            notifPanel.classList.remove("show");
+        }
+    });
+</script>
+
+<script>
+    function getStartOfWeek(date) {
+        const currentDate = new Date(date);
+        const day = currentDate.getDay(); // Sunday = 0, Monday = 1
+        const difference = currentDate.getDate() - day + (day === 0 ? -6 : 1);
+
+        currentDate.setDate(difference);
+        currentDate.setHours(0, 0, 0, 0);
+
+        return currentDate;
+    }
+
+    function isSameDate(dateOne, dateTwo) {
+        return (
+            dateOne.getFullYear() === dateTwo.getFullYear() &&
+            dateOne.getMonth() === dateTwo.getMonth() &&
+            dateOne.getDate() === dateTwo.getDate()
+        );
+    }
+
+    function buildWeeklyBookingChart() {
+        const svg = document.getElementById("weeklyBookingChart");
+        const totalLabel = document.getElementById("weeklyTotalLabel");
+        const bookingDateElements = document.querySelectorAll(".booking-date-source");
+
+        if (!svg) return;
+
+        const today = new Date();
+        const monday = getStartOfWeek(today);
+
+        const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const dayCounts = [0, 0, 0, 0, 0, 0, 0];
+
+        bookingDateElements.forEach(function(item) {
+            const checkinValue = item.dataset.checkin;
+
+            if (!checkinValue) return;
+
+            const checkinDate = new Date(checkinValue + "T00:00:00");
+
+            for (let index = 0; index < 7; index++) {
+                const weekDate = new Date(monday);
+                weekDate.setDate(monday.getDate() + index);
+
+                if (isSameDate(checkinDate, weekDate)) {
+                    dayCounts[index]++;
+                }
+            }
+        });
+
+        const totalBookingsThisWeek = dayCounts.reduce(function(total, count) {
+            return total + count;
+        }, 0);
+
+        if (totalLabel) {
+            totalLabel.textContent = totalBookingsThisWeek + " booking/s this week";
+        }
+
+        const maxCount = Math.max(...dayCounts, 1);
+
+        const xPoints = [35, 105, 175, 245, 315, 385, 465];
+        const chartTop = 45;
+        const chartBottom = 160;
+        const chartHeight = chartBottom - chartTop;
+
+        const points = dayCounts.map(function(count, index) {
+            const x = xPoints[index];
+            const y = chartBottom - ((count / maxCount) * chartHeight);
+
+            return {
+                x: x,
+                y: y,
+                count: count,
+                label: dayLabels[index]
+            };
+        });
+
+        const polylinePoints = points.map(function(point) {
+            return point.x + "," + point.y;
+        }).join(" ");
+
+        let circles = "";
+        let labels = "";
+        let countLabels = "";
+
+        points.forEach(function(point) {
+            const isHighest = point.count === maxCount && point.count > 0;
+            const circleColor = isHighest ? "#f0bd34" : "#0f4c81";
+
+            circles += `
+                <circle cx="${point.x}" cy="${point.y}" r="${isHighest ? 7 : 6}" fill="${circleColor}" />
+            `;
+
+            labels += `
+                <text x="${point.x - 13}" y="205" font-size="18" fill="#64748b">${point.label}</text>
+            `;
+
+            countLabels += `
+                <text x="${point.x - 5}" y="${point.y - 14}" font-size="14" fill="#0f4c81" font-weight="700">${point.count}</text>
+            `;
+        });
+
+        svg.innerHTML = `
+            <line x1="30" y1="170" x2="470" y2="170" stroke="#dbe3ef"/>
+            <line x1="30" y1="130" x2="470" y2="130" stroke="#edf2f7"/>
+            <line x1="30" y1="90" x2="470" y2="90" stroke="#edf2f7"/>
+            <line x1="30" y1="50" x2="470" y2="50" stroke="#edf2f7"/>
+
+            <polyline
+                fill="none"
+                stroke="#0f4c81"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="${polylinePoints}" />
+
+            ${circles}
+            ${countLabels}
+            ${labels}
+        `;
+    }
+
+    document.addEventListener("DOMContentLoaded", buildWeeklyBookingChart);
+</script>
+
+</body>
+</html>

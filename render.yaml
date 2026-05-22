@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: paraiso-ala-eh
+    runtime: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_HOST
+        value: 0.0.0.0
+      - key: APP_DEBUG
+        value: false
+      - key: FLASK_DEBUG
+        value: 0
+      - key: AUTO_INIT_DB
+        value: true
+      - key: DB_CREATE_IF_MISSING
+        value: false
+      - key: DB_SSLMODE
+        value: require
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false

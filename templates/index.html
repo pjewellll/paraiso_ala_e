@@ -1,0 +1,467 @@
+{% extends 'base.html' %}
+{% block title %}Home | Paraiso Ala Eh{% endblock %}
+
+{% block content %}
+
+{% set booking_images = {
+    'Gazebo': 'gazebo.jpg',
+    'Poolside Cabana': 'cabana.jpg',
+    'Open Cottage': 'cafe.jpg',
+    'Kubo': 'aesthetic.jpg',
+    'Villa Room': 'villasure.jpg',
+    'Modern Kubo': 'modern.jpg',
+    'Table Rental': 'table.jpg',
+    'Tent Pitching': 'tent.jpg',
+    'Karaoke Rental': 'karaoke.jpg',
+    'Day Tour Cottage': 'cafe.jpg',
+    'Standard Room': 'villasure.jpg',
+    'Deluxe Room': 'modern.jpg',
+    'Family Villa': 'villasure.jpg'
+} %}
+
+{% if bookings is defined %}
+    {% set display_bookings = bookings %}
+{% elif user_bookings is defined %}
+    {% set display_bookings = user_bookings %}
+{% elif recent_bookings is defined %}
+    {% set display_bookings = recent_bookings %}
+{% else %}
+    {% set display_bookings = [] %}
+{% endif %}
+
+<!-- HOME SECTION -->
+<section id="home" class="hero scroll-section">
+    <div>
+        <span class="eyebrow" data-i18n="welcome_to">Welcome to</span>
+
+        <h2 data-i18n="resort_name">
+            Paraiso Ala Eh Garden Resort
+        </h2>
+
+        <p data-i18n="hero_text">
+            Relax, unwind, and enjoy your tropical stay at Paraiso Ala Eh Garden Resort.
+        </p>
+
+        <div class="hero-actions">
+            <a class="btn primary" href="#booking-preview" data-i18n="book_now">
+                Book Now!
+            </a>
+
+            <a class="btn secondary" href="#rooms-preview" data-i18n="view_rooms">
+                View Rooms
+            </a>
+        </div>
+    </div>
+
+    <div class="mock-card resort-preview hero-slider">
+        <img class="slide-image active"
+             src="{{ url_for('static', filename='images/resort.jpg') }}"
+             alt="Paraiso Ala Eh Garden Resort">
+
+        <img class="slide-image"
+             src="{{ url_for('static', filename='images/pool.jpg') }}"
+             alt="Resort Pool">
+
+        <img class="slide-image"
+             src="{{ url_for('static', filename='images/view.jpg') }}"
+             alt="Resort View">
+
+        <img class="slide-image"
+             src="{{ url_for('static', filename='images/side.jpg') }}"
+             alt="Resort Cottage">
+
+        <button type="button" class="slider-btn prev" onclick="changeSlide(-1)">‹</button>
+        <button type="button" class="slider-btn next" onclick="changeSlide(1)">›</button>
+
+        <div class="slider-dots">
+            <button type="button" class="dot active" onclick="goToSlide(0)"></button>
+            <button type="button" class="dot" onclick="goToSlide(1)"></button>
+            <button type="button" class="dot" onclick="goToSlide(2)"></button>
+            <button type="button" class="dot" onclick="goToSlide(3)"></button>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+    <div class="divider-circle">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+             alt="Paraiso Ala Eh Logo">
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="scroll-section">
+    <div class="grid-3">
+        <article class="card">
+            <h3 data-i18n="online_booking">Online Booking</h3>
+            <p data-i18n="online_booking_text">
+                Guests can submit reservations directly from the booking page.
+            </p>
+        </article>
+
+        <article class="card">
+            <h3 data-i18n="admin_dashboard">Admin Dashboard</h3>
+            <p data-i18n="admin_dashboard_text">
+                Track booking requests, view inquiries, and update statuses.
+            </p>
+        </article>
+
+        <article class="card">
+            <h3 data-i18n="expandable_system">Expandable System</h3>
+            <p data-i18n="expandable_system_text">
+                You can keep developing this using Flask, SQLite, and later add email or payment features.
+            </p>
+        </article>
+    </div>
+</section>
+
+<!-- BOOKINGS IN PROCESS SECTION -->
+{% if display_bookings %}
+<div class="section-divider">
+    <div class="divider-circle">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+             alt="Paraiso Ala Eh Logo">
+    </div>
+</div>
+
+<section id="bookings-process" class="scroll-section bookings-process-section">
+    <div class="section-content">
+
+        <div class="section-header compact-header">
+            <span class="eyebrow">Bookings</span>
+            <h2>Bookings In Process</h2>
+            <p>Here are your current pending or active reservations.</p>
+        </div>
+
+        <div class="bookings-process-grid">
+            {% for booking in display_bookings %}
+
+                {% set booked_type =
+                    booking.room_type
+                    if booking.room_type is defined and booking.room_type
+                    else booking.room_name
+                    if booking.room_name is defined and booking.room_name
+                    else booking.service_type
+                    if booking.service_type is defined and booking.service_type
+                    else 'Booking'
+                %}
+
+                {% set guest_name =
+                    booking.guest_name
+                    if booking.guest_name is defined and booking.guest_name
+                    else booking.fullname
+                    if booking.fullname is defined and booking.fullname
+                    else booking.full_name
+                    if booking.full_name is defined and booking.full_name
+                    else 'Guest'
+                %}
+
+                {% set checkin_date =
+                    booking.checkin_date
+                    if booking.checkin_date is defined and booking.checkin_date
+                    else booking.check_in_date
+                    if booking.check_in_date is defined and booking.check_in_date
+                    else ''
+                %}
+
+                {% set checkout_date =
+                    booking.checkout_date
+                    if booking.checkout_date is defined and booking.checkout_date
+                    else booking.check_out_date
+                    if booking.check_out_date is defined and booking.check_out_date
+                    else ''
+                %}
+
+                {% set guests =
+                    booking.guests
+                    if booking.guests is defined and booking.guests
+                    else booking.number_of_guests
+                    if booking.number_of_guests is defined and booking.number_of_guests
+                    else 1
+                %}
+
+                {% set status =
+                    booking.status
+                    if booking.status is defined and booking.status
+                    else 'Pending'
+                %}
+
+                <article class="booking-process-card">
+                    <div class="booking-process-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/' ~ booking_images.get(booked_type, 'view.jpg')) }}"
+                            alt="{{ booked_type }}"
+                            class="booking-process-img"
+                            onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/view.jpg') }}';"
+                        >
+                    </div>
+
+                    <div class="booking-process-info">
+                        <span class="booking-status status-{{ status|lower }}">
+                            {{ status }}
+                        </span>
+
+                        <h3>{{ booked_type }}</h3>
+
+                        <p class="booking-guest">
+                            {{ guest_name }}
+                        </p>
+
+                        <p class="booking-date">
+                            {{ checkin_date }}
+                            {% if checkout_date %}
+                                - {{ checkout_date }}
+                            {% endif %}
+                        </p>
+
+                        <p class="booking-guests">
+                            {{ guests }} guest/s
+                        </p>
+                    </div>
+                </article>
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- DIVIDER -->
+<div class="section-divider">
+    <div class="divider-circle">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+             alt="Paraiso Ala Eh Logo">
+    </div>
+</div>
+
+<!-- ROOMS PREVIEW SECTION -->
+<section id="rooms-preview" class="scroll-section">
+    <div class="section-content">
+        <div class="section-header">
+            <span class="eyebrow" data-i18n="rooms">Rooms</span>
+            <h2 data-i18n="rooms_title">Choose Your Stay</h2>
+            <p data-i18n="rooms_text">
+                Explore our available rooms, cottages, and stay options.
+            </p>
+        </div>
+
+        <div class="grid-3 section-gap">
+            <article class="card">
+                <h3>Gazebo</h3>
+                <p>
+                    Open shaded gazebo ideal for family gatherings, dining, and relaxing by the resort.
+                </p>
+                <a class="btn secondary" href="{{ url_for('rooms') }}" data-i18n="view_details">
+                    View Details
+                </a>
+            </article>
+
+            <article class="card">
+                <h3>Villa Room</h3>
+                <p>
+                    Spacious room option for families and group stays.
+                </p>
+                <a class="btn secondary" href="{{ url_for('rooms') }}" data-i18n="view_details">
+                    View Details
+                </a>
+            </article>
+
+            <article class="card">
+                <h3>Kubo</h3>
+                <p>
+                    Traditional Filipino-style cottage for a relaxing resort experience.
+                </p>
+                <a class="btn secondary" href="{{ url_for('rooms') }}" data-i18n="view_details">
+                    View Details
+                </a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+    <div class="divider-circle">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+             alt="Paraiso Ala Eh Logo">
+    </div>
+</div>
+
+<!-- BOOKING PREVIEW SECTION -->
+<section id="booking-preview" class="scroll-section booking-preview">
+    <div class="section-content">
+        <div class="section-header">
+            <span class="eyebrow" data-i18n="booking">Booking</span>
+
+            <h2 data-i18n="booking_title">
+                Ready to Reserve?
+            </h2>
+
+            <p data-i18n="booking_text">
+                Book your stay online and wait for confirmation from the resort admin.
+            </p>
+        </div>
+
+        <a class="btn primary" href="{{ url_for('booking') }}" data-i18n="book_now">
+            Book Now!
+        </a>
+    </div>
+</section>
+
+<style>
+/* ================================
+   BOOKINGS IN PROCESS DESIGN
+================================ */
+
+.bookings-process-section {
+    padding-top: 20px;
+}
+
+.compact-header {
+    margin-bottom: 22px;
+}
+
+.bookings-process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.booking-process-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px;
+    border-radius: 22px;
+    border: 2px solid rgba(240, 189, 52, 0.65);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.14);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+body:not(.dark-mode) .booking-process-card {
+    background:
+        radial-gradient(circle at top right, rgba(240, 189, 52, 0.12), transparent 35%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    color: #071b3f;
+}
+
+body.dark-mode .booking-process-card {
+    background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 35%),
+        linear-gradient(180deg, #17284d 0%, #101d38 100%);
+    color: #ffffff;
+}
+
+.booking-process-card:hover {
+    transform: translateY(-6px);
+    border-color: #f0bd34;
+    box-shadow: 0 24px 44px rgba(0, 0, 0, 0.22);
+}
+
+.booking-process-image-wrap {
+    width: 128px;
+    height: 118px;
+    flex-shrink: 0;
+    border-radius: 17px;
+    overflow: hidden;
+    border: 2px solid #f0bd34;
+    background: #ffffff;
+}
+
+.booking-process-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.booking-process-card:hover .booking-process-img {
+    transform: scale(1.08);
+}
+
+.booking-process-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.booking-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: #fff1c9;
+    color: #9a5d00;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-approved,
+.status-confirmed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-cancelled,
+.status-declined {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.booking-process-info h3 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+body:not(.dark-mode) .booking-process-info h3 {
+    color: #071b3f;
+}
+
+body.dark-mode .booking-process-info h3 {
+    color: #ffffff;
+}
+
+.booking-process-info p {
+    margin: 0 0 8px;
+    line-height: 1.35;
+}
+
+body:not(.dark-mode) .booking-process-info p {
+    color: #334155;
+}
+
+body.dark-mode .booking-process-info p {
+    color: #dbe7fb;
+}
+
+.booking-date {
+    font-weight: 700;
+}
+
+.booking-guests {
+    font-weight: 800;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .booking-process-card {
+        flex-direction: column;
+    }
+
+    .booking-process-image-wrap {
+        width: 100%;
+        height: 180px;
+    }
+}
+</style>
+
+{% endblock %}
