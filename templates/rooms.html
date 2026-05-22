@@ -12,11 +12,34 @@
     'Poolside Cabana': 'cabana.jpg',
     'Tent Pitching': 'tent.jpg',
     'Table Rental': 'table.jpg',
-    'Karaoke Rental': 'karaoke.jpg',
-
+    'Karaoke Rental': 'karaoke.jpg'
 } %}
 
 {% set rental_names = ['Table Rental', 'Tent Pitching', 'Karaoke Rental'] %}
+
+{% set room_name_keys = {
+    'Open Cottage': 'room_open_cottage',
+    'Kubo': 'room_kubo',
+    'Villa Room': 'room_villa_room',
+    'Modern Kubo': 'room_modern_kubo',
+    'Gazebo': 'room_gazebo',
+    'Poolside Cabana': 'room_poolside_cabana',
+    'Tent Pitching': 'room_tent_pitching',
+    'Table Rental': 'room_table_rental',
+    'Karaoke Rental': 'room_karaoke_rental'
+} %}
+
+{% set room_desc_keys = {
+    'Open Cottage': 'desc_open_cottage',
+    'Kubo': 'desc_kubo',
+    'Villa Room': 'desc_villa_room',
+    'Modern Kubo': 'desc_modern_kubo',
+    'Gazebo': 'desc_gazebo',
+    'Poolside Cabana': 'desc_poolside_cabana',
+    'Tent Pitching': 'desc_tent_pitching',
+    'Table Rental': 'desc_table_rental',
+    'Karaoke Rental': 'desc_karaoke_rental'
+} %}
 
 <section class="page-intro">
     <span class="eyebrow" data-i18n="rooms_eyebrow">Accommodations & Pricing</span>
@@ -30,10 +53,19 @@
 <section class="room-section section-gap">
     <div class="premium-section-header stay-header">
         <div class="premium-header-content">
-            <span class="premium-kicker">ACCOMMODATIONS</span>
-            <h3>Accommodations & Stay Options</h3>
+            <span class="premium-kicker" data-i18n="accommodations_kicker">
+                ACCOMMODATIONS
+            </span>
+
+            <h3 data-i18n="accommodations_title">
+                Accommodations & Stay Options
+            </h3>
+
             <div class="premium-line"></div>
-            <p>Rooms, cottages, gazebos, cabanas, and other relaxing stay spaces for guests.</p>
+
+            <p data-i18n="accommodations_text">
+                Rooms, cottages, gazebos, cabanas, and other relaxing stay spaces for guests.
+            </p>
         </div>
     </div>
 
@@ -41,9 +73,13 @@
         {% for room in rooms %}
             {% if room['room_name'] not in rental_names %}
                 {% set image_file = room_images.get(room['room_name'], 'resort.jpg') %}
+                {% set name_key = room_name_keys.get(room['room_name'], '') %}
+                {% set desc_key = room_desc_keys.get(room['room_name'], '') %}
 
                 <article class="card room-card stay-card">
-                    <span class="card-badge stay-badge">Stay Option</span>
+                    <span class="card-badge stay-badge" data-i18n="stay_option">
+                        Stay Option
+                    </span>
 
                     <div class="room-image-box">
                         <img src="{{ url_for('static', filename='images/' ~ image_file) }}"
@@ -51,8 +87,17 @@
                     </div>
 
                     <div class="card-content">
-                        <h3>{{ room['room_name'] }}</h3>
-                        <p>{{ room['description'] }}</p>
+                        {% if name_key %}
+                            <h3 data-i18n="{{ name_key }}">{{ room['room_name'] }}</h3>
+                        {% else %}
+                            <h3>{{ room['room_name'] }}</h3>
+                        {% endif %}
+
+                        {% if desc_key %}
+                            <p data-i18n="{{ desc_key }}">{{ room['description'] }}</p>
+                        {% else %}
+                            <p>{{ room['description'] }}</p>
+                        {% endif %}
 
                         <p>
                             <strong data-i18n="capacity_label">Capacity:</strong>
@@ -75,10 +120,19 @@
 <section class="room-section section-gap">
     <div class="premium-section-header rental-header">
         <div class="premium-header-content">
-            <span class="premium-kicker">RENTAL SERVICES</span>
-            <h3>Rental Services</h3>
+            <span class="premium-kicker" data-i18n="rental_services_kicker">
+                RENTAL SERVICES
+            </span>
+
+            <h3 data-i18n="rental_services_title">
+                Rental Services
+            </h3>
+
             <div class="premium-line"></div>
-            <p>Extra rental options for activities, entertainment, celebrations, and guest convenience.</p>
+
+            <p data-i18n="rental_services_text">
+                Extra rental options for activities, entertainment, celebrations, and guest convenience.
+            </p>
         </div>
     </div>
 
@@ -86,9 +140,13 @@
         {% for room in rooms %}
             {% if room['room_name'] in rental_names %}
                 {% set image_file = room_images.get(room['room_name'], 'resort.jpg') %}
+                {% set name_key = room_name_keys.get(room['room_name'], '') %}
+                {% set desc_key = room_desc_keys.get(room['room_name'], '') %}
 
                 <article class="card room-card rental-card">
-                    <span class="card-badge rental-badge">Rental Service</span>
+                    <span class="card-badge rental-badge" data-i18n="rental_service">
+                        Rental Service
+                    </span>
 
                     <div class="room-image-box">
                         <img src="{{ url_for('static', filename='images/' ~ image_file) }}"
@@ -96,8 +154,17 @@
                     </div>
 
                     <div class="card-content">
-                        <h3>{{ room['room_name'] }}</h3>
-                        <p>{{ room['description'] }}</p>
+                        {% if name_key %}
+                            <h3 data-i18n="{{ name_key }}">{{ room['room_name'] }}</h3>
+                        {% else %}
+                            <h3>{{ room['room_name'] }}</h3>
+                        {% endif %}
+
+                        {% if desc_key %}
+                            <p data-i18n="{{ desc_key }}">{{ room['description'] }}</p>
+                        {% else %}
+                            <p>{{ room['description'] }}</p>
+                        {% endif %}
 
                         <p>
                             <strong data-i18n="capacity_label">Capacity:</strong>
