@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from datetime import datetime, timedelta
 from functools import wraps
 from pathlib import Path
@@ -88,6 +89,8 @@ ROOM_RATES = {
 
 ENTRANCE_FEE_PER_GUEST = 200
 DOWN_PAYMENT_RATE = 0.50
+
+EMAIL_PATTERN = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
 
 
 def _normalize_database_url(database_url: str) -> str:
@@ -1041,20 +1044,20 @@ def login():
         next_page = url_for("home")
 
     if request.method == "POST":
-        email = request.form.get("email", "").strip()
-        password = request.form.get("password", "")
+        email = request.form.get("email", "").strip().lower()
 
-        if email == "user@gmail.com" and password == "12345":
+        if re.fullmatch(EMAIL_PATTERN, email):
             session.clear()
-            session["user_id"] = 1
-            session["user_name"] = "Guest User"
+            session["user_id"] = email
+            session["user_email"] = email
+            session["user_name"] = email.split("@", 1)[0]
+
             flash("Login successful!", "success")
             return redirect(next_page)
 
-        flash("Invalid email or password.", "error")
+        flash("Please enter a valid email address.", "error")
 
     return render_template("login.html", next_page=next_page)
-
 
 @app.route("/logout")
 def logout():
