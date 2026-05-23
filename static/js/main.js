@@ -695,6 +695,7 @@ function addAiMessage(message, sender) {
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
+
 function removeTypingMessage() {
     const chatBody = document.getElementById("aiChatBody");
 
@@ -702,10 +703,10 @@ function removeTypingMessage() {
         return;
     }
 
-    const messages = chatBody.querySelectorAll(".ai-message.bot");
+    const typingMessage = chatBody.querySelector(".ai-message.typing");
 
-    if (messages.length > 0 && messages[messages.length - 1].textContent === "Typing...") {
-        messages[messages.length - 1].remove();
+    if (typingMessage) {
+        typingMessage.remove();
     }
 }
 
@@ -717,6 +718,56 @@ function sendSuggestion(message) {
     }
 
     sendAiMessage();
+}
+
+function getAiLanguage() {
+    return localStorage.getItem("aiLanguage") || localStorage.getItem("language") || "en";
+}
+
+function setAiLanguage(language) {
+    localStorage.setItem("aiLanguage", language);
+    updateAiLanguageButtons();
+
+    const input = document.getElementById("aiChatInput");
+
+    if (input) {
+        input.placeholder = language === "tl"
+            ? "Magtanong tungkol sa kuwarto, booking, presyo, o resort..."
+            : "Ask about rooms, booking, prices, or resort services...";
+    }
+}
+
+function updateAiLanguageButtons() {
+    const language = getAiLanguage();
+    const enButton = document.getElementById("aiLangEn");
+    const tlButton = document.getElementById("aiLangTl");
+
+    if (enButton) {
+        enButton.classList.toggle("active-ai-lang", language === "en");
+    }
+
+    if (tlButton) {
+        tlButton.classList.toggle("active-ai-lang", language === "tl");
+    }
+}
+
+function getAiText(key) {
+    const language = getAiLanguage();
+
+    const text = {
+        en: {
+            typing: "Typing...",
+            fallback: "Sorry, I do not have an answer for that yet.",
+            error: "Sorry, I cannot respond right now. Please try again later."
+        },
+        tl: {
+            typing: "Nagta-type...",
+            fallback: "Pasensya na, wala pa akong sagot para diyan.",
+            error: "Pasensya na, hindi ako makasagot ngayon. Subukan muli mamaya."
+        }
+    };
+
+    return text[language][key] || text.en[key];
 }
 
 function sendAiMessage(event) {
@@ -736,10 +787,12 @@ function sendAiMessage(event) {
         return;
     }
 
+    const aiLanguage = getAiLanguage();
+
     addAiMessage(message, "user");
     input.value = "";
 
-    addAiMessage("Typing...", "bot");
+    addAiMessage(getAiText("typing"), "bot typing");
 
     fetch("/chatbot", {
         method: "POST",
@@ -747,7 +800,8 @@ function sendAiMessage(event) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            message: message
+            message: message,
+            language: aiLanguage
         })
     })
         .then(function (response) {
@@ -756,13 +810,13 @@ function sendAiMessage(event) {
         .then(function (data) {
             setTimeout(function () {
                 removeTypingMessage();
-                addAiMessage(data.reply || "Sorry, I do not have an answer for that yet.", "bot");
+                addAiMessage(data.reply || getAiText("fallback"), "bot");
             }, 1200);
         })
         .catch(function () {
             setTimeout(function () {
                 removeTypingMessage();
-                addAiMessage("Sorry, I cannot respond right now. Please try again later.", "bot");
+                addAiMessage(getAiText("error"), "bot");
             }, 1400);
         });
 }
@@ -782,6 +836,7 @@ if (savedTheme === "dark") {
 
 applyLanguage(savedLanguage);
 updateActiveLanguage(savedLanguage);
+setAiLanguage(localStorage.getItem("aiLanguage") || savedLanguage);
 
     const slides = document.querySelectorAll(".slide-image");
 

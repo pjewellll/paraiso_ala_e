@@ -958,82 +958,80 @@ def booked_dates():
         "booked_dates": dates
     }
 
-
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
-    data = request.get_json()
-    user_message = data.get("message", "").lower().strip()
+    data = request.get_json() or {}
 
-    if not user_message:
-        return {"reply": "Please type your question so I can help you."}
+    message = (data.get("message") or "").lower().strip()
+    language = data.get("language", "en")
 
-    if any(word in user_message for word in ["room", "rooms", "kubo", "villa", "cottage", "accommodation", "gazebo", "cabana"]):
+    is_tagalog = language == "tl"
+
+    if not message:
         reply = (
-            "We offer stay options such as Open Cottage, Kubo, Villa Room, Modern Kubo, "
-            "Gazebo, and Poolside Cabana. You can visit the Rooms page to view pricing."
+            "Pakilagay ang iyong tanong tungkol sa resort, booking, kuwarto, presyo, o serbisyo."
+            if is_tagalog
+            else "Please enter your question about the resort, booking, rooms, prices, or services."
+        )
+        return jsonify({"reply": reply})
+
+    if any(word in message for word in ["room", "rooms", "kuwarto", "kwarto", "tuluyan", "villa", "kubo"]):
+        reply = (
+            "Mayroon kaming mga tuluyan tulad ng Gazebo, Kubo, Open Cottage, Villa Room, Modern Kubo, at Poolside Cabana. Maaari mong tingnan ang Mga Kuwarto page para sa kapasidad at presyo."
+            if is_tagalog
+            else "We have stay options such as Gazebo, Kubo, Open Cottage, Villa Room, Modern Kubo, and Poolside Cabana. You can check the Rooms page for capacity and prices."
         )
 
-    elif any(word in user_message for word in ["rental", "table", "tent", "karaoke"]):
+    elif any(word in message for word in ["book", "booking", "reserve", "reservation", "mag-book", "magbook", "pareserba"]):
         reply = (
-            "We also offer rental services such as Table Rental, Tent Pitching, and Karaoke Rental. "
-            "You can check the Rooms page for rental prices."
+            "Para mag-book, pindutin ang Mag-book Ngayon, punan ang guest details, piliin ang kuwarto o serbisyo, check-in at check-out date, mode of payment, at isumite ang booking."
+            if is_tagalog
+            else "To book, click Book Now, fill out your guest details, choose your room or service, select check-in and check-out dates, payment method, and submit your booking."
         )
 
-    elif any(word in user_message for word in ["book", "booking", "reserve", "reservation"]):
+    elif any(word in message for word in ["price", "presyo", "rate", "bayad", "payment", "downpayment", "fee"]):
         reply = (
-            "To book, click the Book Now button, log in if required, fill out your guest details, "
-            "select your room or rental option, choose your dates, then submit your reservation."
+            "Makikita ang presyo sa bawat kuwarto o serbisyo sa Rooms page. Sa booking form, automatic na lalabas ang estimated total, entrance fee, required down payment, at remaining balance."
+            if is_tagalog
+            else "Prices are shown for each room or service on the Rooms page. In the booking form, the estimated total, entrance fee, required down payment, and remaining balance are computed automatically."
         )
 
-    elif any(word in user_message for word in ["payment", "pay", "gcash", "maya", "bank", "down payment"]):
+    elif any(word in message for word in ["location", "address", "direksyon", "saan", "where", "calatagan"]):
         reply = (
-            "Available payment methods include GCash, Maya, and Bank Transfer. "
-            "The system also shows your estimated total amount, required down payment, and remaining balance."
+            "Ang Paraiso Ala Eh Garden Resort ay nasa Calatagan, Batangas. Maaari mong buksan ang Contact page para sa location details at directions."
+            if is_tagalog
+            else "Paraiso Ala Eh Garden Resort is located in Calatagan, Batangas. You may open the Contact page for location details and directions."
         )
 
-    elif any(word in user_message for word in ["check in", "check-in", "checkin", "check out", "check-out", "checkout", "time"]):
+    elif any(word in message for word in ["contact", "message", "email", "phone", "number", "tawag", "mensahe"]):
         reply = (
-            "For day tour, operating hours are usually 8AM to 6PM. "
-            "For overnight stay, check-in starts around 2PM and check-out is 12NN."
+            "Maaari kang makipag-ugnayan gamit ang Contact page. Doon ka puwedeng magpadala ng mensahe o tingnan ang contact details ng resort."
+            if is_tagalog
+            else "You can contact the resort through the Contact page. You can send a message there or check the resort contact details."
         )
 
-    elif any(word in user_message for word in ["amenities", "pool", "billiard", "kitchen", "parking"]):
+    elif any(word in message for word in ["service", "rental", "rent", "table", "tent", "karaoke", "videoke", "serbisyo"]):
         reply = (
-            "Our amenities include Infinity Pool, Modern Rooms and Cottages, Karaoke, "
-            "Billiard Hall, Kitchen Access, and Spacious Parking."
+            "Mayroon ding pinaparentang serbisyo tulad ng Table Rental, Tent Pitching, at Videoke/Karaoke Rental para sa activities, celebration, at bonding."
+            if is_tagalog
+            else "We also offer rental services such as Table Rental, Tent Pitching, and Karaoke/Videoke Rental for activities, celebrations, and bonding."
         )
 
-    elif any(word in user_message for word in ["location", "map", "where", "address", "calatagan"]):
+    elif any(word in message for word in ["check in", "check-in", "checkout", "check out", "date", "petsa"]):
         reply = (
-            "Paraiso Ala Eh Garden Resort is located in Calatagan, Batangas. "
-            "You can check the Contact page to view the Google Map location."
-        )
-
-    elif any(word in user_message for word in ["contact", "phone", "email", "facebook", "instagram"]):
-        reply = (
-            "You can contact the resort through the Contact page. "
-            "There you can see the phone number, email, social media links, and inquiry form."
-        )
-
-    elif any(word in user_message for word in ["cancel", "edit", "delete"]):
-        reply = (
-            "You can edit or delete your booking only within the allowed time period. "
-            "If the booking is already locked or past the allowed time, please contact the resort admin."
-        )
-
-    elif any(word in user_message for word in ["hello", "hi", "hey", "good morning", "good afternoon"]):
-        reply = (
-            "Hello! Welcome to Paraiso Ala Eh Garden Resort. "
-            "How may I assist you with your booking today?"
+            "Sa booking form, pumili ng check-in date at check-out date. Hindi dapat mas maaga o kapareho ng check-in date ang check-out date."
+            if is_tagalog
+            else "In the booking form, select your check-in and check-out dates. The check-out date should not be earlier than or the same as the check-in date."
         )
 
     else:
         reply = (
-            "I can help you with rooms, booking, rentals, payments, amenities, operating hours, "
-            "location, and contact information. Please ask about any of those topics."
+            "Pasensya na, hindi ko pa sigurado ang sagot diyan. Maaari kang magtanong tungkol sa kuwarto, booking, presyo, rental services, location, o contact details."
+            if is_tagalog
+            else "Sorry, I am not sure about that yet. You can ask me about rooms, booking, prices, rental services, location, or contact details."
         )
 
-    return {"reply": reply}
+    return jsonify({"reply": reply})
 
 
 @app.route("/login", methods=["GET", "POST"])

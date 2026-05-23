@@ -6704,3 +6704,28 @@ body.dark-mode .booking-page .preview-row span {
 body.dark-mode .booking-page .preview-row strong {
     color: #ffffff !important;
 }
+
+/* AI CHAT LANGUAGE BUTTONS */
+.ai-chat-lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ai-chat-lang button {
+    border: 1px solid rgba(240, 189, 52, 0.65);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    padding: 5px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.ai-chat-lang button:hover,
+.ai-chat-lang button.active-ai-lang {
+    background: #f0bd34;
+    color: #071b3f;
+}
