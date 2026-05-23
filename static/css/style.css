@@ -6729,3 +6729,77 @@ body.dark-mode .booking-page .preview-row strong {
     background: #f0bd34;
     color: #071b3f;
 }
+
+/* AI CHAT HEADER LANGUAGE FIX */
+.ai-chat-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+}
+
+.ai-chat-title-block {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+}
+
+.ai-chat-title-block strong {
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+}
+
+.ai-chat-title-block span {
+    color: #dbe7fb !important;
+    font-size: 0.78rem !important;
+    line-height: 1.25 !important;
+}
+
+.ai-chat-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+}
+
+.ai-chat-lang {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.ai-chat-header .ai-lang-btn {
+    width: auto !important;
+    height: auto !important;
+    min-width: 34px !important;
+    padding: 6px 9px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(240, 189, 52, 0.75) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #ffffff !important;
+    font-size: 0.72rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+}
+
+.ai-chat-header .ai-lang-btn.active-ai-lang {
+    background: #f0bd34 !important;
+    color: #071b3f !important;
+}
+
+.ai-chat-header .ai-chat-close-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34pxs !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    border: none !important;
+    background: #f0bd34 !important;
+    color: #071b3f !important;
+    font-size: 1.2rem !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+}

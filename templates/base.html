@@ -284,26 +284,26 @@
 </footer>
 
 <!-- AI CHATBOT WIDGET -->
-<div class="ai-chat-widget" id="aiChatWidget">
-    <div class="ai-chat-header">
-        <div>
-            <strong>Paraiso Ala Eh AI Assistant</strong>
-            <span>Ask about rooms, booking, payment, or location</span>
+<div class="ai-chat-header">
+    <div class="ai-chat-title-block">
+        <strong id="aiChatTitle">Paraiso Ala Eh AI Assistant</strong>
+        <span id="aiChatSubtitle">Ask about rooms, booking, payment, or location</span>
+    </div>
+
+    <div class="ai-chat-actions">
+        <div class="ai-chat-lang">
+            <button type="button" id="aiLangEn" class="ai-lang-btn" onclick="setAiLanguage('en')">EN</button>
+            <button type="button" id="aiLangTl" class="ai-lang-btn" onclick="setAiLanguage('tl')">TL</button>
         </div>
 
-        <div class="ai-chat-lang">
-    <button type="button" id="aiLangEn" onclick="setAiLanguage('en')">EN</button>
-    <button type="button" id="aiLangTl" onclick="setAiLanguage('tl')">TL</button>
+        <button type="button" class="ai-chat-close-btn" onclick="toggleAiChat()">×</button>
+    </div>
 </div>
 
-        <button type="button" onclick="toggleAiChat()">×</button>
-    </div>
-
     <div class="ai-chat-body" id="aiChatBody">
-        <div class="ai-message bot">
-            Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?
-        </div>
-    </div>
+        <div class="ai-message bot" id="aiWelcomeMessage">
+    Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?
+</div>
 
     <div class="ai-chat-suggestions">
         <button type="button" onclick="sendSuggestion('How can I book a room?')">Booking</button>

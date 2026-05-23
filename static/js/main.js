@@ -679,12 +679,17 @@ function toggleAiChat() {
         console.log("AI chat widget not found.");
     }
 }
-
 function addAiMessage(message, sender) {
     const chatBody = document.getElementById("aiChatBody");
 
     if (!chatBody) {
         return;
+    }
+
+    const welcome = document.getElementById("aiWelcomeMessage");
+
+    if (welcome) {
+        welcome.dataset.changed = "true";
     }
 
     const messageDiv = document.createElement("div");
@@ -729,14 +734,34 @@ function setAiLanguage(language) {
     updateAiLanguageButtons();
 
     const input = document.getElementById("aiChatInput");
+    const title = document.getElementById("aiChatTitle");
+    const subtitle = document.getElementById("aiChatSubtitle");
+    const welcome = document.getElementById("aiWelcomeMessage");
 
     if (input) {
         input.placeholder = language === "tl"
             ? "Magtanong tungkol sa kuwarto, booking, presyo, o resort..."
             : "Ask about rooms, booking, prices, or resort services...";
     }
-}
 
+    if (title) {
+        title.textContent = language === "tl"
+            ? "Paraiso Ala Eh AI Assistant"
+            : "Paraiso Ala Eh AI Assistant";
+    }
+
+    if (subtitle) {
+        subtitle.textContent = language === "tl"
+            ? "Magtanong tungkol sa kuwarto, booking, bayarin, o lokasyon"
+            : "Ask about rooms, booking, payment, or location";
+    }
+
+    if (welcome && welcome.dataset.changed !== "true") {
+        welcome.textContent = language === "tl"
+            ? "Magandang araw! Welcome sa Paraiso Ala Eh Garden Resort. Paano kita matutulungan?"
+            : "Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?";
+    }
+}
 function updateAiLanguageButtons() {
     const language = getAiLanguage();
     const enButton = document.getElementById("aiLangEn");
