@@ -960,78 +960,56 @@ def booked_dates():
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
-    data = request.get_json() or {}
+    data = request.get_json()
 
-    message = (data.get("message") or "").lower().strip()
+    message = data.get("message", "").lower()
     language = data.get("language", "en")
 
-    is_tagalog = language == "tl"
+    # TAGALOG MODE
+    if language == "tl":
 
-    if not message:
-        reply = (
-            "Pakilagay ang iyong tanong tungkol sa resort, booking, kuwarto, presyo, o serbisyo."
-            if is_tagalog
-            else "Please enter your question about the resort, booking, rooms, prices, or services."
-        )
-        return jsonify({"reply": reply})
+        if "room" in message or "kuwarto" in message:
+            reply = "Mayroon kaming Villa Room, Kubo, Gazebo, Open Cottage, at iba pang tuluyan."
 
-    if any(word in message for word in ["room", "rooms", "kuwarto", "kwarto", "tuluyan", "villa", "kubo"]):
-        reply = (
-            "Mayroon kaming mga tuluyan tulad ng Gazebo, Kubo, Open Cottage, Villa Room, Modern Kubo, at Poolside Cabana. Maaari mong tingnan ang Mga Kuwarto page para sa kapasidad at presyo."
-            if is_tagalog
-            else "We have stay options such as Gazebo, Kubo, Open Cottage, Villa Room, Modern Kubo, and Poolside Cabana. You can check the Rooms page for capacity and prices."
-        )
+        elif "book" in message or "reservation" in message or "magbook" in message:
+            reply = "Upang mag-book, pindutin ang 'Mag-book Ngayon' at sagutan ang reservation form."
 
-    elif any(word in message for word in ["book", "booking", "reserve", "reservation", "mag-book", "magbook", "pareserba"]):
-        reply = (
-            "Para mag-book, pindutin ang Mag-book Ngayon, punan ang guest details, piliin ang kuwarto o serbisyo, check-in at check-out date, mode of payment, at isumite ang booking."
-            if is_tagalog
-            else "To book, click Book Now, fill out your guest details, choose your room or service, select check-in and check-out dates, payment method, and submit your booking."
-        )
+        elif "price" in message or "presyo" in message:
+            reply = "Makikita ang presyo sa page ng Mga Kuwarto."
 
-    elif any(word in message for word in ["price", "presyo", "rate", "bayad", "payment", "downpayment", "fee"]):
-        reply = (
-            "Makikita ang presyo sa bawat kuwarto o serbisyo sa Rooms page. Sa booking form, automatic na lalabas ang estimated total, entrance fee, required down payment, at remaining balance."
-            if is_tagalog
-            else "Prices are shown for each room or service on the Rooms page. In the booking form, the estimated total, entrance fee, required down payment, and remaining balance are computed automatically."
-        )
+        elif "location" in message or "saan" in message:
+            reply = "Matatagpuan ang Paraiso Ala Eh Garden Resort sa Calatagan, Batangas."
 
-    elif any(word in message for word in ["location", "address", "direksyon", "saan", "where", "calatagan"]):
-        reply = (
-            "Ang Paraiso Ala Eh Garden Resort ay nasa Calatagan, Batangas. Maaari mong buksan ang Contact page para sa location details at directions."
-            if is_tagalog
-            else "Paraiso Ala Eh Garden Resort is located in Calatagan, Batangas. You may open the Contact page for location details and directions."
-        )
+        elif "hello" in message or "hi" in message or "magandang umaga" in message:
+            reply = "Magandang araw! Paano kita matutulungan?"
 
-    elif any(word in message for word in ["contact", "message", "email", "phone", "number", "tawag", "mensahe"]):
-        reply = (
-            "Maaari kang makipag-ugnayan gamit ang Contact page. Doon ka puwedeng magpadala ng mensahe o tingnan ang contact details ng resort."
-            if is_tagalog
-            else "You can contact the resort through the Contact page. You can send a message there or check the resort contact details."
-        )
+        else:
+            reply = "Pasensya na, hindi ko pa alam ang sagot diyan."
 
-    elif any(word in message for word in ["service", "rental", "rent", "table", "tent", "karaoke", "videoke", "serbisyo"]):
-        reply = (
-            "Mayroon ding pinaparentang serbisyo tulad ng Table Rental, Tent Pitching, at Videoke/Karaoke Rental para sa activities, celebration, at bonding."
-            if is_tagalog
-            else "We also offer rental services such as Table Rental, Tent Pitching, and Karaoke/Videoke Rental for activities, celebrations, and bonding."
-        )
-
-    elif any(word in message for word in ["check in", "check-in", "checkout", "check out", "date", "petsa"]):
-        reply = (
-            "Sa booking form, pumili ng check-in date at check-out date. Hindi dapat mas maaga o kapareho ng check-in date ang check-out date."
-            if is_tagalog
-            else "In the booking form, select your check-in and check-out dates. The check-out date should not be earlier than or the same as the check-in date."
-        )
-
+    # ENGLISH MODE
     else:
-        reply = (
-            "Pasensya na, hindi ko pa sigurado ang sagot diyan. Maaari kang magtanong tungkol sa kuwarto, booking, presyo, rental services, location, o contact details."
-            if is_tagalog
-            else "Sorry, I am not sure about that yet. You can ask me about rooms, booking, prices, rental services, location, or contact details."
-        )
 
-    return jsonify({"reply": reply})
+        if "room" in message:
+            reply = "We offer Villa Rooms, Kubo, Gazebo, Open Cottage, and other stay options."
+
+        elif "book" in message or "reservation" in message:
+            reply = "To reserve, click the Book Now button and complete the reservation form."
+
+        elif "price" in message:
+            reply = "Room and rental prices can be found on the Rooms page."
+
+        elif "location" in message:
+            reply = "Paraiso Ala Eh Garden Resort is located in Calatagan, Batangas."
+
+        elif "hello" in message or "hi" in message:
+            reply = "Hello! How may I help you today?"
+
+        else:
+            reply = "Sorry, I do not have an answer for that yet."
+
+    return jsonify({
+        "reply": reply
+    })
 
 
 @app.route("/login", methods=["GET", "POST"])
