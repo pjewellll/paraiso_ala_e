@@ -282,28 +282,36 @@
 <footer class="site-footer">
     <p>&copy; 2026 Paraiso Ala Eh Garden Resort. Python Flask version.</p>
 </footer>
-
 <!-- AI CHATBOT WIDGET -->
-<div class="ai-chat-header">
-    <div class="ai-chat-title-block">
-        <strong id="aiChatTitle">Paraiso Ala Eh AI Assistant</strong>
-        <span id="aiChatSubtitle">Ask about rooms, booking, payment, or location</span>
-    </div>
-
-    <div class="ai-chat-actions">
-        <div class="ai-chat-lang">
-            <button type="button" id="aiLangEn" class="ai-lang-btn" onclick="setAiLanguage('en')">EN</button>
-            <button type="button" id="aiLangTl" class="ai-lang-btn" onclick="setAiLanguage('tl')">TL</button>
+<div class="ai-chat-widget" id="aiChatWidget">
+    <div class="ai-chat-header">
+        <div class="ai-chat-title-block">
+            <strong id="aiChatTitle">Paraiso Ala Eh AI Assistant</strong>
+            <span id="aiChatSubtitle">Ask about rooms, booking, payment, or location</span>
         </div>
 
-        <button type="button" class="ai-chat-close-btn" onclick="toggleAiChat()">×</button>
+        <div class="ai-chat-actions">
+            <div class="ai-chat-lang">
+                <button type="button" id="aiLangEn" class="ai-lang-btn" onclick="setAiLanguage('en')">
+                    EN
+                </button>
+
+                <button type="button" id="aiLangTl" class="ai-lang-btn" onclick="setAiLanguage('tl')">
+                    TL
+                </button>
+            </div>
+
+            <button type="button" class="ai-chat-close-btn" onclick="toggleAiChat()">
+                ×
+            </button>
+        </div>
     </div>
-</div>
 
     <div class="ai-chat-body" id="aiChatBody">
         <div class="ai-message bot" id="aiWelcomeMessage">
-    Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?
-</div>
+            Hello! Welcome to Paraiso Ala Eh Garden Resort. How may I help you today?
+        </div>
+    </div>
 
     <div class="ai-chat-suggestions">
         <button type="button" onclick="sendSuggestion('How can I book a room?')">Booking</button>
@@ -317,6 +325,7 @@
                id="aiChatInput"
                placeholder="Ask about rooms, payment, location..."
                autocomplete="off">
+
         <button type="submit">Send</button>
     </form>
 </div>
